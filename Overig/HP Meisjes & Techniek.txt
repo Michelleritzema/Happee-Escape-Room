@@ -1,0 +1,12 @@
+[ DATABASE ]
+
+Database-naam: 		prj_2015_2016_hplab_meis1
+
+Gebruikersnaam: 	prj_2015_2016_hplab_meis1
+
+Wachtwoord:		ohquairi
+
+[ WORDPRESS ]
+
+Gebruikersnaam:		Happee
+Wachtwoord:		HappeeMeis&Tec2016
