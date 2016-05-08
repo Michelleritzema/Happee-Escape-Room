@@ -66,10 +66,8 @@
     <Compile Include="Assets\Assets\DoorSystem\Debugger\Yurowm\DebugPanel\DebugPanel.cs" />
     <Compile Include="Assets\Assets\DoorSystem\Debugger\Yurowm\DebugPanel\DebugPanelField.cs" />
     <Compile Include="Assets\Assets\DoorSystem\Debugger\Yurowm\DebugPanel\DebugPanelViewport.cs" />
-    <Compile Include="Assets\Assets\DoorSystem\Scripts\Detection.cs" />
-    <Compile Include="Assets\Assets\DoorSystem\Scripts\Door.cs" />
+    <Compile Include="Assets\Assets\DoorSystem\Scripts\ButtonActions.cs" />
     <Compile Include="Assets\Assets\DoorSystem\Scripts\MouseLook.cs" />
-    <Compile Include="Assets\Assets\DoorSystem\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Scripts\Antialiasing.cs" />
     <Compile Include="Assets\Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Scripts\Bloom.cs" />
     <Compile Include="Assets\Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Scripts\BloomAndFlares.cs" />
@@ -114,6 +112,12 @@
     <Compile Include="Assets\Assets\Yurowm\Demo\Scripts\CharacterViewer.cs" />
     <Compile Include="Assets\Assets\Yurowm\Demo\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\CheckPassword.cs" />
+    <Compile Include="Assets\Scripts\Detection.cs" />
+    <Compile Include="Assets\Scripts\Door.cs" />
+    <Compile Include="Assets\Scripts\LetterChanger.cs" />
+    <Compile Include="Assets\Scripts\PasswordTerminal.cs" />
+    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Assets\NatureStarterKit2\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />

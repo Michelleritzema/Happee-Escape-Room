@@ -1,43 +1,30 @@
-////////////////////////////////////
-//Last edited by: Alexander Ameye //
-//on: Sunday, 22/11/2015          //
-////////////////////////////////////
-
 using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
+
 public class Door : MonoBehaviour {
-	
-	// DOOR SETTINGS
-	[Header("Door Settings")]
-	[Tooltip("The start angle of the rotation (original position = 0 degrees)")]
-	public float StartAngle = 0.0F;
-	[Tooltip("The end angle of the rotation")]
-	public float EndAngle = 90.0F;
-	
-	public enum SideOfHinge
+
+    private int n = 0; //For 'moveAmount' loop.
+    [HideInInspector] public bool Running = false;
+
+    public float startAngle = 0.0F;
+	public float endAngle = 90.0F;
+    public int moveAmount = 0;
+    public float speed = 3F;
+
+    public SideOfHinge HingeSide;
+    private Quaternion endRotation, startRotation;
+    private int State;
+
+    public enum SideOfHinge
 	{
 		Left,
 		Right,
 	}
-	public SideOfHinge HingeSide;
-	
-	[Tooltip("Moving speed of the door/window")]
-	public float Speed = 3F;
-	[Tooltip("0 = ∞")]
-	public int TimesMoveable = 0;
-
-	//PRIVATE SETTINGS
-	private int n = 0; //For 'TimesMoveable' loop.
-	[HideInInspector] public bool Running = false;
-
-	// Define a start and an end rotation.
-	private Quaternion EndRot, StartRot;
-	private int State;
 
 	// Create a hinge.
-	GameObject hinge;
+	private GameObject hinge;
 
 	// START FUNCTION
 	void Start ()
@@ -79,7 +66,7 @@ public class Door : MonoBehaviour {
 				HingePosCopy.y = PosDoorY;
 
 				HingeRotCopy.x = RotDoorX;
-				HingeRotCopy.y = -StartAngle;
+				HingeRotCopy.y = -startAngle;
 				HingeRotCopy.z = RotDoorZ;
 			}
 
@@ -90,7 +77,7 @@ public class Door : MonoBehaviour {
 				HingePosCopy.y = PosDoorY;
 
 				HingeRotCopy.x = RotDoorX;
-				HingeRotCopy.y = -StartAngle;
+				HingeRotCopy.y = -startAngle;
 				HingeRotCopy.z = RotDoorZ;
      		}	
 		}
@@ -106,7 +93,7 @@ public class Door : MonoBehaviour {
 				HingePosCopy.y = PosDoorY;
 
 				HingeRotCopy.x = RotDoorX;
-				HingeRotCopy.y = -StartAngle;
+				HingeRotCopy.y = -startAngle;
 				HingeRotCopy.z = RotDoorZ;
 			}
 
@@ -117,7 +104,7 @@ public class Door : MonoBehaviour {
 				HingePosCopy.y = PosDoorY;
 
 				HingeRotCopy.x = RotDoorX;
-				HingeRotCopy.y = -StartAngle;
+				HingeRotCopy.y = -startAngle;
 				HingeRotCopy.z = RotDoorZ;
 			}
 		}
@@ -135,17 +122,17 @@ public class Door : MonoBehaviour {
 		//cube.GetComponent<Renderer>().material.color = Color.black;
 		
 		// USER ERROR CODES
-		if (Mathf.Abs(StartAngle) + Mathf.Abs(EndAngle) == 180 || Mathf.Abs(StartAngle) + Mathf.Abs(EndAngle) > 180)
+		if (Mathf.Abs(startAngle) + Mathf.Abs(endAngle) == 180 || Mathf.Abs(startAngle) + Mathf.Abs(endAngle) > 180)
 		{
-			UnityEditor.EditorUtility.DisplayDialog ("Error 001","Difference between StartAngle and EndAngle can't be >=180", "Ok", "");
+			UnityEditor.EditorUtility.DisplayDialog ("Error 001", "Difference between startAngle and endAngle can't be >=180", "Ok", "");
 			UnityEditor.EditorApplication.isPlaying = false;
 		}
 
-		// Angle defining.
-		// Set 'StartRot' to be rotation when door is not yet moved.
-		StartRot = Quaternion.Euler (0, -StartAngle, 0);
-		// Set 'EndRot' to be the rotation when door is moved.
-		EndRot = Quaternion.Euler(0, -EndAngle, 0);
+        // Angle defining.
+        // Set 'startRotation' to be rotation when door is not yet moved.
+        startRotation = Quaternion.Euler (0, -startAngle, 0);
+        // Set 'endRotation' to be the rotation when door is moved.
+        endRotation = Quaternion.Euler(0, -endAngle, 0);
 	}
 
 	// UPDATE FUNCTION
@@ -154,32 +141,40 @@ public class Door : MonoBehaviour {
 
 	}
 
+    public void DoorMovable(bool movable)
+    {
+        if (movable)
+            moveAmount = 0;
+        else
+            moveAmount = -1;
+    }
+
 	// OPEN FUNCTION
 	public IEnumerator Open ()
     {
-		if (n < TimesMoveable || TimesMoveable == 0)
+		if (n < moveAmount || moveAmount == 0)
 		{
-			if (hinge.transform.rotation == (State == 0 ? EndRot : StartRot))
+			if (hinge.transform.rotation == (State == 0 ? endRotation : startRotation))
 			{
-				// Change state from 1 to 0 and back (= change from Endrot to StartRot).
-				State ^= 1;
+                // Change state from 1 to 0 and back (= change from endRotation to startRotation).
+                State ^= 1;
 			}
 
-			// Set 'finalRotation' to 'Endrot' when moving and to 'StartRot' when moving back.
-			Quaternion finalRotation = ((State == 0) ? EndRot : StartRot);
+            // Set 'finalRotation' to 'endRotation' when moving and to 'startRotation' when moving back.
+            Quaternion finalRotation = ((State == 0) ? endRotation : startRotation);
 
     	// Make the door rotate until it is fully opened/closed.
     	while (Mathf.Abs(Quaternion.Angle(finalRotation, hinge.transform.rotation)) > 0.01f)
     	{
 			Running = true;
-			hinge.transform.rotation = Quaternion.Lerp (hinge.transform.rotation, finalRotation, Time.deltaTime * Speed);
+			hinge.transform.rotation = Quaternion.Lerp (hinge.transform.rotation, finalRotation, Time.deltaTime * speed);
 
       		yield return new WaitForEndOfFrame();
     	}
 
 			Running = false;
 
-			if(TimesMoveable == 0)
+			if(moveAmount == 0)
 			{
 				n = 0;
 			}
