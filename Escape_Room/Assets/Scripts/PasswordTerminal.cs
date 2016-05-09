@@ -5,7 +5,7 @@ using System.Linq;
 
 public class PasswordTerminal : MonoBehaviour {
 
-    private string passwordTerminal = "escape";
+    private string passwordTerminal = "bb";
     private Dictionary<int, string> letterTranslator;
     public GameObject[] letterPanelPositions = new GameObject[10];
     public GameObject letter1, letter2, letter3, letter4, letter5, 
