@@ -1,0 +1,15 @@
+Server ip:
+145.24.222.121
+
+Disable IIS services:
+https://support.microsoft.com/en-us/kb/321141
+
+Xampp:
+Start in admin modus!s
+
+Jenkins setup:
+On server -> http://localhost:9090/
+On computer -> http://145.24.222.121:9090/
+
+Access Jenkins service:
+run -> services.msc
