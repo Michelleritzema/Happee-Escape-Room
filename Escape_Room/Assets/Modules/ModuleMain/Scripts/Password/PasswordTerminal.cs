@@ -1,20 +1,43 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+
+/*
+ * Created by Michelle Ritzema.
+ * 
+ * Class that represents the password terminal that opens the escape door.
+ * Unlocking the door can be done by entering the correct password.
+ */
 
 public class PasswordTerminal : MonoBehaviour {
 
-    private string passwordTerminal = "bb";
-    private Dictionary<int, string> letterTranslator;
+    private Dictionary<int, string> letterTranslator = new Dictionary<int, string>();
+    private readonly string alphabet = "abcdefghijklmnopqrstuvwxyz";
+    private string passwordTerminal = "default";
+
     public GameObject[] letterPanelPositions = new GameObject[10];
     public GameObject letter1, letter2, letter3, letter4, letter5, 
         letter6, letter7, letter8, letter9, letter10, escapeDoor;
     public Light indicatorLight;
 
+    /*
+     * Initializes the password terminal.
+     */
+    public void Start () {
+        passwordTerminal = File.ReadAllText(@Application.dataPath + "/Settings/password.txt");
+        InitializePanel();
+        InitializeLetterDictionary();
+        preparePasswordPanel();
+    }
 
-    // Use this for initialization
-    void Start () {
+    /*
+     * Initializes each individual letter in the password terminal.
+     */
+    private void InitializePanel()
+    {
         letterPanelPositions[0] = letter1;
         letterPanelPositions[1] = letter2;
         letterPanelPositions[2] = letter3;
@@ -25,34 +48,18 @@ public class PasswordTerminal : MonoBehaviour {
         letterPanelPositions[7] = letter8;
         letterPanelPositions[8] = letter9;
         letterPanelPositions[9] = letter10;
-        letterTranslator = new Dictionary<int, string>();
-        letterTranslator[1] = "a";
-        letterTranslator[2] = "b";
-        letterTranslator[3] = "c";
-        letterTranslator[4] = "d";
-        letterTranslator[5] = "e";
-        letterTranslator[6] = "f";
-        letterTranslator[7] = "g";
-        letterTranslator[8] = "h";
-        letterTranslator[9] = "i";
-        letterTranslator[10] = "j";
-        letterTranslator[11] = "k";
-        letterTranslator[12] = "l";
-        letterTranslator[13] = "m";
-        letterTranslator[14] = "n";
-        letterTranslator[15] = "o";
-        letterTranslator[16] = "p";
-        letterTranslator[17] = "q";
-        letterTranslator[18] = "r";
-        letterTranslator[19] = "s";
-        letterTranslator[20] = "t";
-        letterTranslator[21] = "u";
-        letterTranslator[22] = "v";
-        letterTranslator[23] = "w";
-        letterTranslator[24] = "x";
-        letterTranslator[25] = "y";
-        letterTranslator[26] = "z";
-        preparePasswordPanel();
+    }
+
+    /*
+     * Initializes the dictionary containing each letter of the alphabet.
+     * This dictionary is used to display the correct letter for every panel position.
+     */
+    private void InitializeLetterDictionary()
+    {
+        for (int i = 0; i < alphabet.Length; i++)
+        {
+            letterTranslator[i+1] = Convert.ToString(alphabet[i]);
+        }
     }
 
     private void preparePasswordPanel()
@@ -88,8 +95,20 @@ public class PasswordTerminal : MonoBehaviour {
             letterPanel = letterPanelPositions[0];
             indicatorLight.color = Color.green;
             escapeDoor.GetComponent<Door>().DoorMovable(true);
+            TriggerDoorAnimation(escapeDoor);
         }
 	}
+
+    /*
+     * Triggers the supplied door's animation, if it is not already running.
+     * If it is closed, the door is opened. If it is opened, the door is closed.
+     */
+    private void TriggerDoorAnimation(GameObject target)
+    {
+        Door door = target.GetComponent<Door>();
+        if (door.Running == false)
+            StartCoroutine(door.Open());
+    }
 
     private int GetLetterIndicator(string letter)
     {
