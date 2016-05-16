@@ -17,8 +17,8 @@ public class PasswordTerminal : MonoBehaviour {
     private Dictionary<int, string> letterTranslator = new Dictionary<int, string>();
     private readonly string alphabet = "abcdefghijklmnopqrstuvwxyz";
     private string passwordTerminal = "default";
+    private GameObject[] letterPanelPositions = new GameObject[10];
 
-    public GameObject[] letterPanelPositions = new GameObject[10];
     public GameObject letter1, letter2, letter3, letter4, letter5, 
         letter6, letter7, letter8, letter9, letter10, escapeDoor;
     public Light indicatorLight;
@@ -30,11 +30,11 @@ public class PasswordTerminal : MonoBehaviour {
         passwordTerminal = File.ReadAllText(@Application.dataPath + "/Settings/password.txt");
         InitializePanel();
         InitializeLetterDictionary();
-        preparePasswordPanel();
+        PreparePasswordPanel();
     }
 
     /*
-     * Initializes each individual letter in the password terminal.
+     * Initializes each individual letter panel in the password terminal.
      */
     private void InitializePanel()
     {
@@ -57,30 +57,39 @@ public class PasswordTerminal : MonoBehaviour {
     private void InitializeLetterDictionary()
     {
         for (int i = 0; i < alphabet.Length; i++)
-        {
             letterTranslator[i+1] = Convert.ToString(alphabet[i]);
-        }
     }
 
-    private void preparePasswordPanel()
+    /*
+     * Sets up the password terminal. Activates a certain amount of panels,
+     * depending on the length of the escape password.
+     */
+    private void PreparePasswordPanel()
     {
         for (int i = 0; i < letterPanelPositions.Length; i++)
         {
-            //string singleLetter;
             GameObject letter = letterPanelPositions[i];
             if (i < passwordTerminal.Length)
                 letter.GetComponent<LetterChanger>().InitializeImage(1);
             else
                 letter.GetComponent<LetterChanger>().InitializeImage(0);
-            /*GameObject letter = letterPanelPositions[i];
-            if(singleLetter.Equals(""))
-                letter.GetComponent<LetterChanger>().SetImage(0);
-            else
-                letter.GetComponent<LetterChanger>().SetImage(GetLetterIndicator(singleLetter));*/
         }
     }
-	
-	public void CheckPassword () {
+
+    /*
+     * Updates the password string by appending the supplied letter.
+     */
+    private string UpdatePassword(string passwordAttempt, string letter)
+    {
+        return passwordAttempt += letter;
+    }
+
+    /*
+     * Fetches the submitted password string by determining for each password letter panel 
+     * what letter is selected.
+     */
+    private string FetchSubmittedPassword()
+    {
         GameObject letterPanel;
         string passwordAttempt = "";
         for (int i = 0; i < letterPanelPositions.Length; i++)
@@ -88,9 +97,18 @@ public class PasswordTerminal : MonoBehaviour {
             letterPanel = letterPanelPositions[i];
             int letterIndicator = letterPanel.GetComponent<LetterChanger>().GetCurrentLetter();
             if (!letterIndicator.Equals(0))
-                passwordAttempt = GetPassword(passwordAttempt, GetLetter(letterIndicator));
+                passwordAttempt = UpdatePassword(passwordAttempt, GetLetter(letterIndicator));
         }
-        if(passwordAttempt.Equals(passwordTerminal))
+        return passwordAttempt;
+    }
+
+    /*
+     * Determines the password that the user has submitted and compares this to the predefined one.
+     * If it matches, the escape door will open.
+     */
+    public void CheckPassword () {
+        string passwordAttempt = FetchSubmittedPassword();
+        if (passwordAttempt.Equals(passwordTerminal))
         {
             letterPanel = letterPanelPositions[0];
             indicatorLight.color = Color.green;
@@ -103,7 +121,7 @@ public class PasswordTerminal : MonoBehaviour {
      * Triggers the supplied door's animation, if it is not already running.
      * If it is closed, the door is opened. If it is opened, the door is closed.
      */
-    private void TriggerDoorAnimation(GameObject target)
+    public void TriggerDoorAnimation(GameObject target)
     {
         Door door = target.GetComponent<Door>();
         if (door.Running == false)
@@ -118,11 +136,6 @@ public class PasswordTerminal : MonoBehaviour {
     private string GetLetter(int letterIndicator)
     {
         return letterTranslator[letterIndicator];
-    }
-
-    private string GetPassword(string passwordAttempt, string letter)
-    {
-        return passwordAttempt += letter;
     }
 
     /*private byte[] GetHash(string input)
