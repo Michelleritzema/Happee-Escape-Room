@@ -1,6 +1,6 @@
 ////////////////////////////////////
 //Last edited by: Alexander Ameye //
-//on: Wednesday, 11/11/2015       //
+//on: Wednesday, 11/11/2015          //
 ////////////////////////////////////
 
 using UnityEngine;
