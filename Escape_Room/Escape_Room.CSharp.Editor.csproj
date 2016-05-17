@@ -91,6 +91,39 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.EditorTestsRunner">
+      <HintPath>Library\UnityAssemblies\UnityEditor.EditorTestsRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>Library\UnityAssemblies\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\UnityAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TreeEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.TreeEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="LitJson">
+      <HintPath>Assets\Assets\LitJson.dll</HintPath>
+    </Reference>
+    <Reference Include="M3DIMPORT_DLL">
+      <HintPath>Assets\MORPH3D\scripts\Plugins\M3DIMPORT_DLL.dll</HintPath>
+    </Reference>
+    <Reference Include="M3D_DLL">
+      <HintPath>Assets\MORPH3D\scripts\Plugins\M3D_DLL.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Escape_Room.CSharp.csproj">
@@ -119,6 +152,13 @@
     <Compile Include="Assets\LeapMotion\Editor\LeapServiceProviderEditor.cs" />
     <Compile Include="Assets\LeapMotion\Scripts\VR\Editor\EyeTypeEditor.cs" />
     <Compile Include="Assets\LeapMotion\Scripts\VR\Editor\LeapTemporalWarpingEditor.cs" />
+    <Compile Include="Assets\MORPH3D\Vendor\Unity\Shaders\Hair\Editor\HairShaderGUI.cs" />
+    <Compile Include="Assets\MORPH3D\Vendor\Unity\Shaders\Skin\Editor\VolundMultiStandardShaderGUI.cs" />
+    <Compile Include="Assets\MORPH3D\scripts\Editor\M3DBlendshapeNamesEditor.cs" />
+    <Compile Include="Assets\MORPH3D\scripts\Editor\M3DCharacterManagerEditor.cs" />
+    <Compile Include="Assets\MORPH3D\scripts\Editor\MaterialImporter.cs" />
+    <Compile Include="Assets\MORPH3D\scripts\Editor\MorphDebugInfo.cs" />
+    <Compile Include="Assets\MORPH3D\scripts\Editor\SearchableWindow.cs" />
     <Compile Include="Assets\Modules\ModuleMain\Assets\DoorSystem\Debugger\Yurowm\Editor\DebugPanelWindow.cs" />
     <Compile Include="Assets\OVR\Editor\OVRBuild.cs" />
     <Compile Include="Assets\OVR\Moonlight\Editor\OVRMoonlightLoader.cs" />
@@ -211,10 +251,23 @@
     <None Include="Assets\LeapMotion\Resources\ThresholdOverlay.shader" />
     <None Include="Assets\LeapMotion\Version.txt" />
     <None Include="Assets\LeapMotion\readme.txt" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Hair\Hair_Standard.shader" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Hair\Hair_UnityStandardCore.cginc" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Hair\Hair_UnityStandardInput.cginc" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Hair\Hair_Universal.shader" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Hair\Hair_setup.cginc" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Skin\Volund_StandardSpecularCharacter.shader" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Skin\Volund_UnityStandardCore.cginc" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Skin\Volund_UnityStandardInput.cginc" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Standard\Standard-2pass-doublesided-half depth.shader" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Standard\Standard-2pass-doublesided.shader" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Standard\Standard-doublesided.shader" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Standard\StandardSpecular-doublesided.shader" />
     <None Include="Assets\OVR\Moonlight\Resources\Unlit Transparent Color.shader" />
     <None Include="Assets\OVR\Moonlight\Shaders\OVRColorRampAlpha.shader" />
     <None Include="Assets\OVR\Moonlight\Shaders\Unlit Crosshair.shader" />
     <None Include="Assets\Plugins\donotdelete.txt" />
+    <None Include="Assets\Settings\password.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

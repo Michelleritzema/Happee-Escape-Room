@@ -3,8 +3,10 @@ using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour {
-	
-	public Transform LookTransform;
+
+    public Game game;
+
+    public Transform LookTransform;
 	public Vector3 Gravity = Vector3.down * 9.81f;
 	public float RotationRate = 0.1f;
 	public float Velocity = 8;
@@ -13,6 +15,7 @@ public class PlayerMovement : MonoBehaviour {
 	public float JumpVelocity = 5;
 	public float GroundHeight = 1.1f;
 	private bool jump;
+    private bool escaped = false;
 
 	void Start() { 
 		GetComponent<Rigidbody>().freezeRotation = true;
@@ -21,7 +24,13 @@ public class PlayerMovement : MonoBehaviour {
 	
 	void Update() {
 		jump = jump || Input.GetButtonDown("Jump");
-	}
+        if (GetComponent<Rigidbody>().position.x > 8 && escaped == false)
+        {
+            //StartCoroutine(escapeDoor.Open());
+            game.GetComponent<Game>().Escaped();
+            escaped = true;
+        }
+    }
 	
 	void FixedUpdate() {
 	

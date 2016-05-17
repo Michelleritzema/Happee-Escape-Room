@@ -16,12 +16,23 @@ public class Door : MonoBehaviour {
     public SideOfHinge HingeSide;
     private Quaternion endRotation, startRotation;
     private int State;
+    private bool opened = false;
 
     public enum SideOfHinge
 	{
 		Left,
 		Right,
 	}
+
+    public bool GetOpened()
+    {
+        return opened;
+    }
+
+    public int GetState()
+    {
+        return State;
+    }
 
 	// Create a hinge.
 	private GameObject hinge;
@@ -173,8 +184,13 @@ public class Door : MonoBehaviour {
     	}
 
 			Running = false;
+            if (opened)
+                opened = false;
+            else
+                opened = true;
 
-			if(moveAmount == 0)
+
+            if (moveAmount == 0)
 			{
 				n = 0;
 			}

@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class Detection : MonoBehaviour
 {
+
 	// INSPECTOR SETTINGS
 	[Header("Detection Settings")]
 	[Tooltip("Within this radius the player is able to open/close the door")]
@@ -71,9 +72,9 @@ public class Detection : MonoBehaviour
 					// Check whether the door is opening/closing or not.
 					if (dooropening.Running == false)
 					{
-						// Open/close the door by running the 'Open' function in the 'DoorOpening' script.
-						StartCoroutine (hit.collider.GetComponent<Door>().Open());
-					}
+                        // Open/close the door by running the 'Open' function in the 'DoorOpening' script.
+                        StartCoroutine (hit.collider.GetComponent<Door>().Open());
+                    }
 				}
 			}
 
