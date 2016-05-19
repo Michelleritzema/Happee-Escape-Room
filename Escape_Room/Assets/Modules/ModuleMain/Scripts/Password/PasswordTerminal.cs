@@ -2,19 +2,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
+/*
+ * Created by Michelle Ritzema.
+ * 
+ * Class that represents the password terminal that opens the escape door.
+ * Unlocking the door can be done by entering the correct password.
+ */
 public class PasswordTerminal : MonoBehaviour {
 
-    private string passwordTerminal = "bb";
-    private Dictionary<int, string> letterTranslator;
-    public GameObject[] letterPanelPositions = new GameObject[10];
+    public Game game;
+
+    private Dictionary<int, string> letterTranslator = new Dictionary<int, string>();
+    private readonly string alphabet = "abcdefghijklmnopqrstuvwxyz";
+    private string passwordTerminal = "default";
+    private GameObject[] letterPanelPositions = new GameObject[10];
+
     public GameObject letter1, letter2, letter3, letter4, letter5, 
-        letter6, letter7, letter8, letter9, letter10, escapeDoor;
-    public Light indicatorLight;
+        letter6, letter7, letter8, letter9, letter10;
 
+    /*
+     * Initializes the password terminal.
+     */
+    public void Start () {
+        passwordTerminal = File.ReadAllText(@Application.dataPath + "/Settings/password.txt");
+        //passwordTerminal = game.GetComponent<Settings>().GetPassword();
+        Debug.Log(GameObject.Find("Game").GetComponent<Settings>().GetPassword());
+        InitializePanel();
+        InitializeLetterDictionary();
+        PreparePasswordPanel();
+    }
 
-    // Use this for initialization
-    void Start () {
+    private void InitializePanel()
+    {
         letterPanelPositions[0] = letter1;
         letterPanelPositions[1] = letter2;
         letterPanelPositions[2] = letter3;
@@ -25,6 +46,10 @@ public class PasswordTerminal : MonoBehaviour {
         letterPanelPositions[7] = letter8;
         letterPanelPositions[8] = letter9;
         letterPanelPositions[9] = letter10;
+    }
+
+    private void InitializeLetterDictionary()
+    {
         letterTranslator = new Dictionary<int, string>();
         letterTranslator[1] = "a";
         letterTranslator[2] = "b";
@@ -52,28 +77,21 @@ public class PasswordTerminal : MonoBehaviour {
         letterTranslator[24] = "x";
         letterTranslator[25] = "y";
         letterTranslator[26] = "z";
-        preparePasswordPanel();
     }
 
-    private void preparePasswordPanel()
+    private void PreparePasswordPanel()
     {
         for (int i = 0; i < letterPanelPositions.Length; i++)
         {
-            //string singleLetter;
             GameObject letter = letterPanelPositions[i];
             if (i < passwordTerminal.Length)
                 letter.GetComponent<LetterChanger>().InitializeImage(1);
             else
                 letter.GetComponent<LetterChanger>().InitializeImage(0);
-            /*GameObject letter = letterPanelPositions[i];
-            if(singleLetter.Equals(""))
-                letter.GetComponent<LetterChanger>().SetImage(0);
-            else
-                letter.GetComponent<LetterChanger>().SetImage(GetLetterIndicator(singleLetter));*/
         }
     }
 	
-	public void CheckPassword () {
+	public string FetchSubmittedPassword() {
         GameObject letterPanel;
         string passwordAttempt = "";
         for (int i = 0; i < letterPanelPositions.Length; i++)
@@ -83,11 +101,18 @@ public class PasswordTerminal : MonoBehaviour {
             if (!letterIndicator.Equals(0))
                 passwordAttempt = GetPassword(passwordAttempt, GetLetter(letterIndicator));
         }
-        if(passwordAttempt.Equals(passwordTerminal))
+        return passwordAttempt;
+    }
+
+    /*
+     * Determines the password that the user has submitted and compares this to the predefined one.
+     * If it matches, the game will execute the actions .
+     */
+    public void CheckPassword () {
+        string passwordAttempt = FetchSubmittedPassword();
+        if (passwordAttempt.Equals(passwordTerminal))
         {
-            letterPanel = letterPanelPositions[0];
-            indicatorLight.color = Color.green;
-            escapeDoor.GetComponent<Door>().DoorMovable(true);
+            game.GetComponent<Game>().Escaping();
         }
 	}
 
