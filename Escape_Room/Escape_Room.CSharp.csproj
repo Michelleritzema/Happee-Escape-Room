@@ -202,6 +202,7 @@
     <Compile Include="Assets\MORPH3D\Vendor\Unity\Shaders\Hair\HairRenderer.cs" />
     <Compile Include="Assets\MORPH3D\scripts\AttachmentPoints\SinglePropDefaultLayoutExample.cs" />
     <Compile Include="Assets\MORPH3D\scripts\AttachmentPoints\SpiralPropLayout.cs" />
+    <Compile Include="Assets\MagenticPinch.cs" />
     <Compile Include="Assets\Modules\ModuleMain\Assets\DoorSystem\Debugger\Yurowm\DebugPanel\DebugPanel.cs" />
     <Compile Include="Assets\Modules\ModuleMain\Assets\DoorSystem\Debugger\Yurowm\DebugPanel\DebugPanelField.cs" />
     <Compile Include="Assets\Modules\ModuleMain\Assets\DoorSystem\Debugger\Yurowm\DebugPanel\DebugPanelViewport.cs" />
