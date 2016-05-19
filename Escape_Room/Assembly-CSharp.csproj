@@ -260,6 +260,7 @@
      <None Include="Assets\Assets\SkySphere_V1\Documentation\How to use.txt" />
      <None Include="Assets\LeapMotion\Resources\PassthroughForeground.shader" />
      <None Include="Assets\Assets\NatureStarterKit\Standard Assets\Effects\ImageEffects\Shaders\CreaseApply.shader" />
+     <None Include="Assets\Settings\password.txt" />
      <None Include="Assets\Assets\NatureStarterKit\Standard Assets\Effects\ImageEffects\Shaders\ChromaticAberrationShader.shader" />
      <None Include="Assets\Assets\NatureStarterKit\Standard Assets\Effects\ImageEffects\Shaders\GlobalFog.shader" />
      <None Include="Assets\Assets\NatureStarterKit\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
