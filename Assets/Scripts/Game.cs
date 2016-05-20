@@ -5,27 +5,23 @@ using System.Collections.Generic;
 using System.IO;
 
 
+/*
+ * Created by Michelle Ritzema.
+ * 
+ * Class that handles the general actions of the game.
+ * Also knows which modules are loaded into the game.
+ */
 public class Game : MonoBehaviour {
+
+    private string[] modules = new string[4];
 
     public Light indicatorLight;
     public Door escapeDoor, puzzleDoor;
-    public string[] modules = new string[4];
 
-    public class Item
-    {
-        public string password;
-    }
-
-    // Use this for initialization
-    void Start () {
-        
-    }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
+    /*
+     * Triggers when the user entered the correct password.
+     * The escape door is opened and the indicator light changes.
+     */
     public void Escaping()
     {
         indicatorLight.color = Color.green;
@@ -33,9 +29,14 @@ public class Game : MonoBehaviour {
         TriggerDoorAnimation(escapeDoor);
     }
 
+    /*
+     * Triggers when the user has escaped the room.
+     * All doors are closed and the puzzle rooms are removed.
+     */
     public void Escaped()
     {
-        TriggerDoorAnimation(escapeDoor);
+        if (escapeDoor.GetComponent<Door>().GetOpened())
+            TriggerDoorAnimation(escapeDoor);
         if (puzzleDoor.GetComponent<Door>().GetOpened())
             TriggerDoorAnimation(puzzleDoor);
         modules[0] = GameObject.Find("Game").GetComponent<Settings>().GetModule1();
@@ -43,9 +44,7 @@ public class Game : MonoBehaviour {
         modules[2] = GameObject.Find("Game").GetComponent<Settings>().GetModule3();
         modules[3] = GameObject.Find("Game").GetComponent<Settings>().GetModule4();
         for(int i = 0; i < 1; i++)
-        {
-            GameObject.Find(modules[i]).SetActiveRecursively(false);
-        }
+            GameObject.Find(modules[i]).SetActive(false);
         escapeDoor.DoorMovable(false);
         puzzleDoor.DoorMovable(false);
     }
@@ -56,7 +55,7 @@ public class Game : MonoBehaviour {
      */
     public void TriggerDoorAnimation(Door door)
     {
-        if (door.Running == false)
+        if (door.GetRunning() == false)
             StartCoroutine(door.Open());
     }
 

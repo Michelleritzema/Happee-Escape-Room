@@ -26,7 +26,6 @@ public class PlayerMovement : MonoBehaviour {
 		jump = jump || Input.GetButtonDown("Jump");
         if (GetComponent<Rigidbody>().position.x > 8 && escaped == false)
         {
-            //StartCoroutine(escapeDoor.Open());
             game.GetComponent<Game>().Escaped();
             escaped = true;
         }

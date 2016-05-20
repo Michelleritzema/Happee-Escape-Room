@@ -12,45 +12,60 @@ using LitJson;
  */
 public class Settings : MonoBehaviour {
 
-    private string jsonString;
     private JsonData settings;
-    private string password, module1, module2, module3, module4;
+    private string jsonString, password, module1, module2, module3, module4;
 
     /*
-     * Initializes the class by reading the JSON file and storing the collected sdata.
+     * Initializes the class by reading the JSON file and storing the collected data.
      */
-    void Start() {
+    public void Start() {
         jsonString = File.ReadAllText(Application.dataPath + "/Settings/settings.json");
         settings = JsonMapper.ToObject(jsonString);
-        //Debug.Log(settings["Settings"][0]["password"].ToString());
         password = settings["Settings"][0]["password"].ToString();
-        //Debug.Log(module1 = settings["Settings"][0]["module1"].ToString());
         module1 = settings["Settings"][0]["module1"].ToString();
+        module2 = settings["Settings"][0]["module1"].ToString();
+        module3 = settings["Settings"][0]["module1"].ToString();
+        module4 = settings["Settings"][0]["module1"].ToString();
     }
 
+    /*
+     * Fetches the stored password string.
+     */
     public string GetPassword()
     {
         return password;
     }
 
+    /*
+     * Fetches the stored module1 string.
+     */
     public string GetModule1()
     {
         return module1;
     }
 
+    /*
+     * Fetches the stored module2 string.
+     */
     public string GetModule2()
     {
-        return module1;
+        return module2;
     }
 
+    /*
+     * Fetches the stored module3 string.
+     */
     public string GetModule3()
     {
-        return module1;
+        return module3;
     }
 
+    /*
+     * Fetches the stored module4 string.
+     */
     public string GetModule4()
     {
-        return module1;
+        return module4;
     }
 
 }

@@ -26,8 +26,7 @@ public class PasswordTerminal : MonoBehaviour {
      * Initializes the password terminal.
      */
     public void Start () {
-        passwordTerminal = File.ReadAllText(@Application.dataPath + "/Settings/password.txt");
-        //passwordTerminal = game.GetComponent<Settings>().GetPassword();
+        passwordTerminal = game.GetComponent<Settings>().GetPassword();
         Debug.Log(GameObject.Find("Game").GetComponent<Settings>().GetPassword());
         InitializePanel();
         InitializeLetterDictionary();
@@ -51,32 +50,10 @@ public class PasswordTerminal : MonoBehaviour {
     private void InitializeLetterDictionary()
     {
         letterTranslator = new Dictionary<int, string>();
-        letterTranslator[1] = "a";
-        letterTranslator[2] = "b";
-        letterTranslator[3] = "c";
-        letterTranslator[4] = "d";
-        letterTranslator[5] = "e";
-        letterTranslator[6] = "f";
-        letterTranslator[7] = "g";
-        letterTranslator[8] = "h";
-        letterTranslator[9] = "i";
-        letterTranslator[10] = "j";
-        letterTranslator[11] = "k";
-        letterTranslator[12] = "l";
-        letterTranslator[13] = "m";
-        letterTranslator[14] = "n";
-        letterTranslator[15] = "o";
-        letterTranslator[16] = "p";
-        letterTranslator[17] = "q";
-        letterTranslator[18] = "r";
-        letterTranslator[19] = "s";
-        letterTranslator[20] = "t";
-        letterTranslator[21] = "u";
-        letterTranslator[22] = "v";
-        letterTranslator[23] = "w";
-        letterTranslator[24] = "x";
-        letterTranslator[25] = "y";
-        letterTranslator[26] = "z";
+        for(int i = 0; i < alphabet.Length; i++)
+        {
+            letterTranslator[i+1] = alphabet[i].ToString();
+        }
     }
 
     private void PreparePasswordPanel()
@@ -130,19 +107,5 @@ public class PasswordTerminal : MonoBehaviour {
     {
         return passwordAttempt += letter;
     }
-
-    /*private byte[] GetHash(string input)
-    {
-        HashAlgorithm algorithm = MD5.Create();
-        return algorithm.ComputeHash(Encoding.UTF8.GetBytes(input));
-    }
-
-    private string GetHashString(byte[] input)
-    {
-        StringBuilder sb = new StringBuilder();
-        foreach (byte b in input)
-            sb.Append(b.ToString("X2"));
-        return sb.ToString();
-    }*/
 
 }
