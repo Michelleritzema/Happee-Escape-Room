@@ -78,7 +78,7 @@ public class MagneticPinch : MonoBehaviour
             }
         }
 
-        Vector3 pinch_position = hand.Fingers[0].TipPosition.ToUnityScaled();
+        Vector3 pinch_position = hand.Fingers[0].TipPosition.ToVector3();
   
 
         // Only change state if it's different.
