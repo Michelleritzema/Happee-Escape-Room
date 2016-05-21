@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-
 /*
  * Original by Alexander Ameye (11/11/2015).
  * Edited by Michelle Ritzema.
@@ -10,10 +9,12 @@ using UnityEngine.UI;
  * Class that enables the player to open and close doors. For this the player needs to be inside 
  * a certain radius. Only objects that have the tag "Door" can be interacted with.
  */
+
 public class Detection : MonoBehaviour
 {
 
     private string triggerTag = "Door";
+    private Door visibleDoor;
     private float radius = 4F;
     private bool inReach;
 
@@ -26,21 +27,26 @@ public class Detection : MonoBehaviour
 	{
 		Ray ray = Camera.main.ViewportPointToRay(new Vector3 (0.5F, 0.5F, 0F));
 		RaycastHit hit;
-		if (Physics.Raycast (ray, out hit, radius))
-		{
-			if(hit.collider.tag == triggerTag)
-			{
+        if (Physics.Raycast(ray, out hit, radius))
+        {
+            if (hit.collider.tag == triggerTag)
+            {
                 inReach = true;
-				if (Input.GetKey(KeyCode.E))
-				{
-					Door dooropening = hit.transform.gameObject.GetComponent<Door>();
-					if (dooropening.GetRunning() == false)
-                        StartCoroutine (hit.collider.GetComponent<Door>().Open());
-				}
-			}
-			else inReach = false;
-		}
-		else inReach = false;
+                visibleDoor = hit.transform.gameObject.GetComponent<Door>();
+                if (Input.GetKey(KeyCode.E) && visibleDoor.GetRunning() == false)
+                    StartCoroutine(hit.collider.GetComponent<Door>().Open());
+            }
+            else
+            {
+                inReach = false;
+                visibleDoor = null;
+            }
+        }
+        else
+        {
+            inReach = false;
+            visibleDoor = null;
+        }
 	}
 
     /*
@@ -49,6 +55,14 @@ public class Detection : MonoBehaviour
     public bool GetInReach()
     {
         return inReach;
+    }
+
+    /*
+     * Returns the visible door object.
+     */
+    public Door GetVisibleDoor()
+    {
+        return visibleDoor;
     }
 
 }

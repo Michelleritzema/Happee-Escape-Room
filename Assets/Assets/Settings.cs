@@ -3,13 +3,13 @@ using System.Collections;
 using System.IO;
 using LitJson;
 
-
 /*
  * Created by Michelle Ritzema.
  * 
  * Class that contains all the settings that the server supplied when building the application.
  * These settings are stored and can be read with the getter methods.
  */
+
 public class Settings : MonoBehaviour {
 
     private JsonData settings;

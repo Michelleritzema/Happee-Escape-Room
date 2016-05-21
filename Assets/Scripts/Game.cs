@@ -4,19 +4,28 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-
 /*
  * Created by Michelle Ritzema.
  * 
  * Class that handles the general actions of the game.
  * Also knows which modules are loaded into the game.
  */
+
 public class Game : MonoBehaviour {
 
     private string[] modules = new string[4];
 
-    public Light indicatorLight;
+    public GameObject escapeDoorIndicatorGlass;
+    public Light escapeDoorIndicatorLight;
     public Door escapeDoor, puzzleDoor;
+
+    /*
+     * Initializes the game.
+     */
+    public void Start()
+    {
+        escapeDoor.DoorMovable(false);
+    }
 
     /*
      * Triggers when the user entered the correct password.
@@ -24,7 +33,8 @@ public class Game : MonoBehaviour {
      */
     public void Escaping()
     {
-        indicatorLight.color = Color.green;
+        escapeDoorIndicatorLight.color = Color.green;
+        escapeDoorIndicatorGlass.GetComponent<Renderer>().material.color = Color.green;
         escapeDoor.GetComponent<Door>().DoorMovable(true);
         TriggerDoorAnimation(escapeDoor);
     }
@@ -57,6 +67,18 @@ public class Game : MonoBehaviour {
     {
         if (door.GetRunning() == false)
             StartCoroutine(door.Open());
+    }
+
+    /*
+     * Create a GUI style for the text display box and return this object.
+     */
+    public GUIStyle GetStandardBoxStyle()
+    {
+        GUIStyle boxStyle = new GUIStyle(GUI.skin.button);
+        Font font = (Font)Resources.Load("Fonts/comic", typeof(Font));
+        boxStyle.font = font;
+        boxStyle.fontSize = 20;
+        return boxStyle;
     }
 
 }

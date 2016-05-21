@@ -1,15 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+ * Created by Michelle Ritzema.
+ * 
+ * Class that handles the actions of a password panel letter.
+ * Each panel can show any letter of the alphabet, unless it is locked at the start.
+ */
+
 public class LetterChanger : MonoBehaviour {
 
-    public static Texture[] letters = new Texture[27];
-    public Texture blank, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z;
-    public GameObject letterPanel;
+    private bool initialized = false;
     private int currentInteger = 1;
-    private bool updatable = false;
 
-	// Use this for initialization
+    public GameObject letterPanel;
+    public Texture[] letters = new Texture[27];
+    public Texture blank, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z;
+
+	/*
+     * Fills the letters array with all the possible letter textures.
+     * Also sets the initialized boolean to true so that the update function will be called.
+     */
 	void Start () {
         letters[0] = blank;
         letters[1] = A;
@@ -38,49 +49,46 @@ public class LetterChanger : MonoBehaviour {
         letters[24] = X;
         letters[25] = Y;
         letters[26] = Z;
-        updatable = true;
+        initialized = false;
     }
 
+    /*
+     * Updates the panel to the correct letter, but only one time.
+     */
     void Update()
     {
-        if(updatable)
+        if(!initialized)
         {
-            SetImage(currentInteger);
-            updatable = false;
+            SetTexture(currentInteger);
+            initialized = true;
         }
     }
 
-    public void InitializeImage(int value)
+    /*
+     * Initializes the letter panel during the start of the game.
+     * It is either set to 0 or 1, depending on the length of the stored password.
+     */
+    public void InitializePanel(int value)
     {
         currentInteger = value;
-        //SetImage(value);
     }
 
-    public void SetImage(int value)
+    /*
+     * Sets the letter panel's texture to the texture that is stored under the supplied index.
+     */
+    public void SetTexture(int value)
     {
         letterPanel.GetComponent<Renderer>().material.mainTexture = letters[value];
     }
 
-    public void moveUp()
-    {
-        setCorrectInteger(true);
-        SetImage(currentInteger);
-    }
-
-    public void moveDown()
-    {
-        setCorrectInteger(false);
-        SetImage(currentInteger);
-    }
-
-    public int GetCurrentLetter()
-    {
-        return currentInteger;
-    }
-
+    /*
+     * Updates the current letter indicator to the next value. This integer is dependent on whether the method 
+     * is called as an addition or a subtraction. If the indicator has reached the end of the letter array, 
+     * it starts at the beginning, and vice versa. If the current letter indicator is set to 0, nothing is changed.
+     */
     private void setCorrectInteger(bool addition)
     {
-        if(!currentInteger.Equals(0))
+        if (!currentInteger.Equals(0))
         {
             if (addition)
             {
@@ -97,6 +105,32 @@ public class LetterChanger : MonoBehaviour {
                     currentInteger--;
             }
         }
+    }
+
+    /*
+     * Moves the letter panel up by one step and updates the texture.
+     */
+    public void MoveUp()
+    {
+        setCorrectInteger(true);
+        SetTexture(currentInteger);
+    }
+
+    /*
+     * Moves the letter panel down by one step and updates the texture.
+     */
+    public void MoveDown()
+    {
+        setCorrectInteger(false);
+        SetTexture(currentInteger);
+    }
+
+    /*
+     * Fetches the current letter indicator.
+     */
+    public int GetCurrentLetter()
+    {
+        return currentInteger;
     }
 
 }
