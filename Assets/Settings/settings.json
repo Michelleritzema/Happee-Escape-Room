@@ -1,7 +1,8 @@
 {
   "Settings": [
     {
-      "schoolName":   "Revius Lyceum Maassluis",
+      "schoolName":    "Revius Lyceum Maassluis",
+      "groupName":    "Anonymous",
       "password":     "abc",
       "totalMinutes": 30,
       "module1":      "ModuleMedicalResearch",
