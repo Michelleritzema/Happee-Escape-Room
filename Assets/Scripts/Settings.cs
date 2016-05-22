@@ -14,6 +14,7 @@ public class Settings : MonoBehaviour {
 
     private JsonData settings;
     private string jsonString, password, module1, module2, module3, module4;
+    private int totalMinutes;
 
     /*
      * Initializes the class by reading the JSON file and storing the collected data.
@@ -22,10 +23,19 @@ public class Settings : MonoBehaviour {
         jsonString = File.ReadAllText(Application.dataPath + "/Settings/settings.json");
         settings = JsonMapper.ToObject(jsonString);
         password = settings["Settings"][0]["password"].ToString();
+        totalMinutes = (int) settings["Settings"][0]["totalMinutes"];
         module1 = settings["Settings"][0]["module1"].ToString();
         module2 = settings["Settings"][0]["module2"].ToString();
         module3 = settings["Settings"][0]["module3"].ToString();
         module4 = settings["Settings"][0]["module4"].ToString();
+    }
+
+    /*
+     * Fetches the stored total minutes integer.
+     */
+    public int GetTotalMinutes()
+    {
+        return totalMinutes;
     }
 
     /*

@@ -28,7 +28,7 @@ public class PasswordTerminal : MonoBehaviour {
      */
     public void Start () {
         password = game.GetComponent<Settings>().GetPassword();
-        Debug.Log("Stored password: " + GameObject.Find("Game").GetComponent<Settings>().GetPassword());
+        Debug.Log("Stored password: " + password);
         InitializePanel();
         InitializeLetterDictionary();
         PreparePasswordPanel();

@@ -14,6 +14,7 @@ using System.IO;
 public class Game : MonoBehaviour {
 
     private string[] modules = new string[4];
+    private int totalMinutes = 60;
 
     private DateTime startTime, endTime, currentTime;
     private TimeSpan finishTime;
@@ -30,11 +31,12 @@ public class Game : MonoBehaviour {
     {
         escaped = false;
         escapeDoor.DoorMovable(false);
+        totalMinutes = GetComponent<Settings>().GetTotalMinutes();
+        Debug.Log("Game duration: " + totalMinutes + " minutes");
         startTime = DateTime.Now;
-        endTime = startTime.AddMinutes(60);
-        Debug.Log("start time: " + startTime);
-        Debug.Log("end time: " + endTime);
-        Debug.Log(startTime.Hour + ":" + startTime.Minute);
+        endTime = startTime.AddMinutes(totalMinutes);
+        Debug.Log("Start time: " + startTime);
+        Debug.Log("End time: " + endTime);
     }
 
     /*

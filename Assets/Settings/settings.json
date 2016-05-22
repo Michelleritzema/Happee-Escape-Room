@@ -2,7 +2,7 @@
   "Settings": [
     {
       "password":     "abc",
-      "totalMinutes": 60,
+      "totalMinutes": 30,
       "module1":      "ModuleMedicalResearch",
       "module2":      "ModuleMedicalResearch",
       "module3":      "ModuleMedicalResearch",
