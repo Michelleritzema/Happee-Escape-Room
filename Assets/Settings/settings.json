@@ -1,6 +1,7 @@
 {
   "Settings": [
     {
+      "schoolName":   "Revius Lyceum Maassluis",
       "password":     "abc",
       "totalMinutes": 30,
       "module1":      "ModuleMedicalResearch",
