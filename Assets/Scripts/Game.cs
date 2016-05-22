@@ -15,6 +15,10 @@ public class Game : MonoBehaviour {
 
     private string[] modules = new string[4];
 
+    private DateTime startTime, endTime, currentTime;
+    private TimeSpan finishTime;
+    private bool escaped;
+
     public GameObject escapeDoorIndicatorGlass;
     public Light escapeDoorIndicatorLight;
     public Door escapeDoor, puzzleDoor;
@@ -24,7 +28,49 @@ public class Game : MonoBehaviour {
      */
     public void Start()
     {
+        escaped = false;
         escapeDoor.DoorMovable(false);
+        startTime = DateTime.Now;
+        endTime = startTime.AddMinutes(60);
+        Debug.Log("start time: " + startTime);
+        Debug.Log("end time: " + endTime);
+        Debug.Log(startTime.Hour + ":" + startTime.Minute);
+    }
+
+    /*
+     * Displays the countdown time to the user. If the user escapes within the given time, 
+     * the countdown is stopped.
+     */
+    public void OnGUI()
+    {
+        currentTime = DateTime.Now;
+        TimeSpan timeLeft;
+        if (!escaped)
+            timeLeft = endTime - currentTime;
+        else
+            timeLeft = finishTime;
+        int horizontalPosition = (Screen.width / 2) - 150;
+        string message = "";
+        GUI.color = Color.white;
+        if (timeLeft.Ticks > 0 && timeLeft.Minutes > 0)
+        {
+            message = string.Format("{0:D2}", timeLeft.Hours) + ":" + string.Format("{0:D2}", timeLeft.Minutes) +
+                ":" + string.Format("{0:D2}", timeLeft.Seconds);
+        }
+        else if (timeLeft.Ticks > 0)
+        {
+            GUI.color = Color.red;
+            message = string.Format("{0:D2}", timeLeft.Hours) + ":" + string.Format("{0:D2}", timeLeft.Minutes) +
+                ":" + string.Format("{0:D2}", timeLeft.Seconds);
+        }
+        else
+        {
+            GUI.color = Color.red;
+            message = "00:00:00";
+        }
+        if (escaped)
+            GUI.color = Color.green;
+        GUI.Box(new Rect(horizontalPosition, 10, 180, 60), message, GetStandardBoxStyle(40));
     }
 
     /*
@@ -33,6 +79,8 @@ public class Game : MonoBehaviour {
      */
     public void Escaping()
     {
+        escaped = true;
+        finishTime = endTime - currentTime;
         escapeDoorIndicatorLight.color = Color.green;
         escapeDoorIndicatorGlass.GetComponent<Renderer>().material.color = Color.green;
         escapeDoor.GetComponent<Door>().DoorMovable(true);
@@ -72,12 +120,12 @@ public class Game : MonoBehaviour {
     /*
      * Create a GUI style for the text display box and return this object.
      */
-    public GUIStyle GetStandardBoxStyle()
+    public GUIStyle GetStandardBoxStyle(int fontSize)
     {
         GUIStyle boxStyle = new GUIStyle(GUI.skin.button);
         Font font = (Font)Resources.Load("Fonts/comic", typeof(Font));
         boxStyle.font = font;
-        boxStyle.fontSize = 20;
+        boxStyle.fontSize = fontSize;
         return boxStyle;
     }
 

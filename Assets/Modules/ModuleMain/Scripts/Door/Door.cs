@@ -172,9 +172,9 @@ public class Door : MonoBehaviour {
             if (detection.GetVisibleDoor() != null)
             {
                 if (detection.GetVisibleDoor().GetMoveAmount() == -1)
-                    GUI.Box(new Rect(40, 40, 300, 60), "Deze deur is vergrendeld", game.GetComponent<Game>().GetStandardBoxStyle());
+                    GUI.Box(new Rect(40, 40, 300, 60), "Deze deur is vergrendeld", game.GetComponent<Game>().GetStandardBoxStyle(20));
                 else
-                    GUI.Box(new Rect(40, 40, 400, 60), "Druk op 'E' om de deur te openen/sluiten", game.GetComponent<Game>().GetStandardBoxStyle());
+                    GUI.Box(new Rect(40, 40, 400, 60), "Druk op 'E' om de deur te openen/sluiten", game.GetComponent<Game>().GetStandardBoxStyle(20));
             }
 		}
 	}

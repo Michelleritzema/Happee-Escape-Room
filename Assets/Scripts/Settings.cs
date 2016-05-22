@@ -23,9 +23,9 @@ public class Settings : MonoBehaviour {
         settings = JsonMapper.ToObject(jsonString);
         password = settings["Settings"][0]["password"].ToString();
         module1 = settings["Settings"][0]["module1"].ToString();
-        module2 = settings["Settings"][0]["module1"].ToString();
-        module3 = settings["Settings"][0]["module1"].ToString();
-        module4 = settings["Settings"][0]["module1"].ToString();
+        module2 = settings["Settings"][0]["module2"].ToString();
+        module3 = settings["Settings"][0]["module3"].ToString();
+        module4 = settings["Settings"][0]["module4"].ToString();
     }
 
     /*
