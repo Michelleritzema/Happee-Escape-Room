@@ -13,7 +13,12 @@
   ],
   "GameStrings": [
     {
-      "titleIntroduction": "Introductie"
+      "titleIntroduction": "Introductie",
+      "welcome": "Welkom bij InIT, jouw virtuele escape room!",
+      "enterTeamName": "Vul hier jullie team naam in:",
+      "emptyTeamNameWarning": "Er is geen team naam ingevuld!",
+      "next": "Volgende",
+      "go":  "Start!"
     }
   ]
 }

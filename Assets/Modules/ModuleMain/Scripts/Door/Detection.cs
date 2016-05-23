@@ -25,27 +25,30 @@ public class Detection : MonoBehaviour
      */
     public void Update()
 	{
-		Ray ray = Camera.main.ViewportPointToRay(new Vector3 (0.5F, 0.5F, 0F));
-		RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, radius))
+        if(Camera.main != null)
         {
-            if (hit.collider.tag == triggerTag)
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0F));
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, radius))
             {
-                inReach = true;
-                visibleDoor = hit.transform.gameObject.GetComponent<Door>();
-                if (Input.GetKey(KeyCode.E) && visibleDoor.GetRunning() == false)
-                    StartCoroutine(hit.collider.GetComponent<Door>().Open());
+                if (hit.collider.tag == triggerTag)
+                {
+                    inReach = true;
+                    visibleDoor = hit.transform.gameObject.GetComponent<Door>();
+                    if (Input.GetKey(KeyCode.E) && visibleDoor.GetRunning() == false)
+                        StartCoroutine(hit.collider.GetComponent<Door>().Open());
+                }
+                else
+                {
+                    inReach = false;
+                    visibleDoor = null;
+                }
             }
             else
             {
                 inReach = false;
                 visibleDoor = null;
             }
-        }
-        else
-        {
-            inReach = false;
-            visibleDoor = null;
         }
 	}
 

@@ -18,25 +18,33 @@ public class Game : MonoBehaviour {
 
     private DateTime startTime, endTime, currentTime;
     private TimeSpan finishTime;
-    private bool escaped;
+    private string go;
+    private bool started, escaped;
 
     public GameObject escapeDoorIndicatorGlass;
+    public Camera initialCamera, playerCamera;
     public Light escapeDoorIndicatorLight;
     public Door escapeDoor, puzzleDoor;
+
+    public enum GUIType
+    {
+        Window,
+        Button,
+        Label
+    };
 
     /*
      * Initializes the game.
      */
     public void Start()
     {
+        SwitchToInitialCamera();
         escaped = false;
+        started = false;
         escapeDoor.DoorMovable(false);
         totalMinutes = GetComponent<Settings>().GetTotalMinutes();
         Debug.Log("Game duration: " + totalMinutes + " minutes");
-        startTime = DateTime.Now;
-        endTime = startTime.AddMinutes(totalMinutes);
-        Debug.Log("Start time: " + startTime);
-        Debug.Log("End time: " + endTime);
+        go = GetComponent<Settings>().go;
     }
 
     /*
@@ -45,34 +53,67 @@ public class Game : MonoBehaviour {
      */
     public void OnGUI()
     {
-        currentTime = DateTime.Now;
-        TimeSpan timeLeft;
-        if (!escaped)
-            timeLeft = endTime - currentTime;
-        else
-            timeLeft = finishTime;
-        int horizontalPosition = (Screen.width / 2) - 150;
-        string message = "";
-        GUI.color = Color.white;
-        if (timeLeft.Ticks > 0 && timeLeft.Minutes > 0)
+        if(started)
         {
-            message = string.Format("{0:D2}", timeLeft.Hours) + ":" + string.Format("{0:D2}", timeLeft.Minutes) +
-                ":" + string.Format("{0:D2}", timeLeft.Seconds);
+            currentTime = DateTime.Now;
+            TimeSpan timeLeft;
+            if (!escaped)
+                timeLeft = endTime - currentTime;
+            else
+                timeLeft = finishTime;
+            if((currentTime - startTime).Seconds < 5 && currentTime.Minute.Equals(startTime.Minute))
+                GUI.Label(new Rect((Screen.width / 2) - 80, (Screen.height / 2) - 100, 200, 100), go, GetStyle(80, GUIType.Label));
+            int horizontalPosition = (Screen.width / 2) - 60;
+            string message = "";
+            GUI.color = Color.white;
+            if (timeLeft.Ticks > 0 && timeLeft.Minutes > 0)
+            {
+                message = string.Format("{0:D2}", timeLeft.Hours) + ":" + string.Format("{0:D2}", timeLeft.Minutes) +
+                    ":" + string.Format("{0:D2}", timeLeft.Seconds);
+            }
+            else if (timeLeft.Ticks > 0)
+            {
+                GUI.color = Color.red;
+                message = string.Format("{0:D2}", timeLeft.Hours) + ":" + string.Format("{0:D2}", timeLeft.Minutes) +
+                    ":" + string.Format("{0:D2}", timeLeft.Seconds);
+            }
+            else
+            {
+                GUI.color = Color.red;
+                message = "00:00:00";
+            }
+            if (escaped)
+                GUI.color = Color.green;
+            GUI.Box(new Rect(horizontalPosition, 10, 180, 60), message, GetStandardBoxStyle(40));
         }
-        else if (timeLeft.Ticks > 0)
-        {
-            GUI.color = Color.red;
-            message = string.Format("{0:D2}", timeLeft.Hours) + ":" + string.Format("{0:D2}", timeLeft.Minutes) +
-                ":" + string.Format("{0:D2}", timeLeft.Seconds);
-        }
-        else
-        {
-            GUI.color = Color.red;
-            message = "00:00:00";
-        }
-        if (escaped)
-            GUI.color = Color.green;
-        GUI.Box(new Rect(horizontalPosition, 10, 180, 60), message, GetStandardBoxStyle(40));
+    }
+    /*
+     * Fetches the current time, and stores the start time and suspected end time.
+     */
+    public void SetTime()
+    {
+        startTime = DateTime.Now;
+        endTime = startTime.AddMinutes(totalMinutes);
+        Debug.Log("Start time: " + startTime);
+        Debug.Log("End time: " + endTime);
+    }
+
+    /*
+     * Activates the initial camera and deactivates the player camera.
+     */
+    public void SwitchToInitialCamera()
+    {
+        initialCamera.gameObject.SetActive(true);
+        playerCamera.gameObject.SetActive(false);
+    }
+
+    /*
+     * Activates the player camera and deactivates the initial camera.
+     */
+    public void SwitchToPlayerCamera()
+    {
+        initialCamera.gameObject.SetActive(false);
+        playerCamera.gameObject.SetActive(true);
     }
 
     /*
@@ -129,6 +170,49 @@ public class Game : MonoBehaviour {
         boxStyle.font = font;
         boxStyle.fontSize = fontSize;
         return boxStyle;
+    }
+
+    /*
+     * Create a GUI style for the supplied GUI type and return this style object.
+     */
+    public GUIStyle GetStyle(int fontSize, GUIType type)
+    {
+        GUIStyle style;
+        switch (type)
+        {
+            case GUIType.Window:
+                style = new GUIStyle(GUI.skin.window);
+                break;
+            case GUIType.Button:
+                style = new GUIStyle(GUI.skin.button);
+                break;
+            case GUIType.Label:
+                style = new GUIStyle(GUI.skin.label);
+                break;
+            default:
+                style = new GUIStyle();
+                break;
+        }
+        Font font = (Font)Resources.Load("Fonts/comic", typeof(Font));
+        style.font = font;
+        style.fontSize = fontSize;
+        return style;
+    }
+
+    /*
+     * Fetches the stored get started boolean.
+     */
+    public bool GetStarted()
+    {
+        return started;
+    }
+
+    /*
+     * Stores the get started boolean.
+     */
+    public void SetStarted(bool started)
+    {
+        this.started = started;
     }
 
 }

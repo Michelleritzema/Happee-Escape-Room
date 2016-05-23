@@ -13,8 +13,10 @@ using LitJson;
 public class Settings : MonoBehaviour {
 
     private JsonData settings;
-    private string jsonString, password, module1, module2, module3, module4;
+    private string jsonString, teamName, password, module1, module2, module3, module4;
     private int totalMinutes;
+
+    public string titleIntroduction, welcome, enterTeamName, emptyTeamNameWarning, next, go;
 
     /*
      * Initializes the class by reading the JSON file and storing the collected data.
@@ -28,6 +30,12 @@ public class Settings : MonoBehaviour {
         module2 = settings["Settings"][0]["module2"].ToString();
         module3 = settings["Settings"][0]["module3"].ToString();
         module4 = settings["Settings"][0]["module4"].ToString();
+        titleIntroduction = settings["GameStrings"][0]["titleIntroduction"].ToString();
+        welcome = settings["GameStrings"][0]["welcome"].ToString();
+        enterTeamName = settings["GameStrings"][0]["enterTeamName"].ToString();
+        emptyTeamNameWarning = settings["GameStrings"][0]["emptyTeamNameWarning"].ToString();
+        next = settings["GameStrings"][0]["next"].ToString();
+        go = settings["GameStrings"][0]["go"].ToString();
     }
 
     /*
@@ -36,6 +44,22 @@ public class Settings : MonoBehaviour {
     public int GetTotalMinutes()
     {
         return totalMinutes;
+    }
+
+    /*
+     * Fetches the stored team name string.
+     */
+    public string GetTeamName()
+    {
+        return teamName;
+    }
+
+    /*
+     * Stores the team name string.
+     */
+    public void SetTeamName(string teamName)
+    {
+        this.teamName = teamName;
     }
 
     /*
