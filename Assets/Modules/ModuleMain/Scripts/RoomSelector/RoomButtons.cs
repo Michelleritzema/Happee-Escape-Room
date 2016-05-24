@@ -12,6 +12,7 @@ public class RoomButtons : MonoBehaviour
 
     public GameObject roomSelector, button;
     public Material active, inactive, clicked;
+    public bool moveRight;
 
     /*
      * Changes the button's texture when the mouse hovers over the button.
@@ -23,11 +24,15 @@ public class RoomButtons : MonoBehaviour
 
     /*
      * Changes the button's texture when the mouse presses the button.
+     * The active room is changed, according to which button has been pressed.
      */
     public void OnMouseDown()
     {
         button.GetComponent<Renderer>().material = clicked;
-        //passwordPanel.GetComponent<PasswordTerminal>().CheckPassword();
+        if(moveRight)
+            roomSelector.GetComponent<RoomSelector>().MoveRoomUp();
+       else
+            roomSelector.GetComponent<RoomSelector>().MoveRoomDown();
     }
 
     /*

@@ -21,7 +21,7 @@ public class Game : MonoBehaviour {
     private string go;
     private bool started, escaped;
 
-    public GameObject escapeDoorIndicatorGlass;
+    public GameObject roomSelector, escapeDoorIndicatorGlass;
     public Camera initialCamera, playerCamera;
     public Light escapeDoorIndicatorLight;
     public Door escapeDoor, puzzleDoor;
@@ -140,12 +140,7 @@ public class Game : MonoBehaviour {
             TriggerDoorAnimation(escapeDoor);
         if (puzzleDoor.GetComponent<Door>().GetOpened())
             TriggerDoorAnimation(puzzleDoor);
-        modules[0] = GameObject.Find("Game").GetComponent<Settings>().GetModule1();
-        modules[1] = GameObject.Find("Game").GetComponent<Settings>().GetModule2();
-        modules[2] = GameObject.Find("Game").GetComponent<Settings>().GetModule3();
-        modules[3] = GameObject.Find("Game").GetComponent<Settings>().GetModule4();
-        for(int i = 0; i < 1; i++)
-            GameObject.Find(modules[i]).SetActive(false);
+        roomSelector.GetComponent<RoomSelector>().HideAllRooms();
         escapeDoor.DoorMovable(false);
         puzzleDoor.DoorMovable(false);
     }
