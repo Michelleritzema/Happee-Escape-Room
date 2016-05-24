@@ -6,9 +6,9 @@
       "password": "abc",
       "totalMinutes": 30,
       "module1": "ModuleMedicalResearch",
-      "module2": "ModuleMedicalResearch",
-      "module3": "ModuleMedicalResearch",
-      "module4": "ModuleMedicalResearch"
+      "module2": "ModuleTest1",
+      "module3": "ModuleTest2",
+      "module4": "ModuleTest3"
     }
   ],
   "GameStrings": [
