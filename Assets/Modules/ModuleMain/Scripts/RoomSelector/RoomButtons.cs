@@ -30,9 +30,9 @@ public class RoomButtons : MonoBehaviour
     {
         button.GetComponent<Renderer>().material = clicked;
         if(moveRight)
-            roomSelector.GetComponent<RoomSelector>().MoveRoomUp();
+            roomSelector.GetComponent<RoomSelector>().ChangeRooms(true);
        else
-            roomSelector.GetComponent<RoomSelector>().MoveRoomDown();
+            roomSelector.GetComponent<RoomSelector>().ChangeRooms(false);
     }
 
     /*

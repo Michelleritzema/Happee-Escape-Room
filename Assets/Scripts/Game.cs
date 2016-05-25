@@ -87,6 +87,7 @@ public class Game : MonoBehaviour {
             GUI.Box(new Rect(horizontalPosition, 10, 180, 60), message, GetStandardBoxStyle(40));
         }
     }
+
     /*
      * Fetches the current time, and stores the start time and suspected end time.
      */
@@ -136,10 +137,8 @@ public class Game : MonoBehaviour {
      */
     public void Escaped()
     {
-        if (escapeDoor.GetComponent<Door>().GetOpened())
-            TriggerDoorAnimation(escapeDoor);
-        if (puzzleDoor.GetComponent<Door>().GetOpened())
-            TriggerDoorAnimation(puzzleDoor);
+        CloseDoor(escapeDoor);
+        CloseDoor(puzzleDoor);
         roomSelector.GetComponent<RoomSelector>().HideAllRooms();
         escapeDoor.DoorMovable(false);
         puzzleDoor.DoorMovable(false);
@@ -153,6 +152,26 @@ public class Game : MonoBehaviour {
     {
         if (door.GetRunning() == false)
             StartCoroutine(door.Open());
+    }
+
+    /*
+     * Closes the supplied door if it is open.
+     */
+    public void CloseDoor(Door door)
+    {
+        if (door.GetComponent<Door>().GetOpened())
+            TriggerDoorAnimation(door);
+    }
+
+    /*
+     * Locks or unlocks the door, depending on the supplied boolean value.
+     */
+    public void LockDoor(Door door, bool lockDoor)
+    {
+        if (lockDoor)
+            door.GetComponent<Door>().DoorMovable(false);
+        else
+            door.GetComponent<Door>().DoorMovable(true);
     }
 
     /*
