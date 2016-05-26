@@ -14,7 +14,8 @@ public class RoomSelector : MonoBehaviour {
     private int roomIndicator = 0;
 
     public Game game;
-    public GameObject displayScreen;
+    public GameObject displayScreen, lightbulb;
+    public Light light;
     public Door puzzleDoor;
 
 	/*
@@ -64,6 +65,7 @@ public class RoomSelector : MonoBehaviour {
                 displayScreen.GetComponent<Renderer>().material.mainTexture = logo1;
                 break;
         }
+        game.GetComponent<Game>().SetRoomIndicatorLight(light, lightbulb, roomIndicator);
     }
 
     /*

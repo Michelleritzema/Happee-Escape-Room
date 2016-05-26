@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 /*
  * Created by Michelle Ritzema.
@@ -13,13 +14,16 @@ using System.IO;
 
 public class Game : MonoBehaviour {
 
+    private static System.Random random = new System.Random();
     private string[] modules = new string[4];
+    private bool[] roomsStatus = new bool[4];
     private int totalMinutes = 60;
 
     private DateTime startTime, endTime, currentTime;
     private TimeSpan finishTime;
-    private string go;
-    private bool started, escaped;
+    private string go, password, scrambledPassword;
+    private bool started, escaped, room1Completed, room2Completed, room3Completed, room4Completed;
+    private double unlockAmount, unlockedLettersAmount;
 
     public GameObject roomSelector, escapeDoorIndicatorGlass;
     public Camera initialCamera, playerCamera;
@@ -40,16 +44,49 @@ public class Game : MonoBehaviour {
     {
         SwitchToInitialCamera();
         escaped = false;
-        started = false;
+        SetStarted(false);
+        setRoom1Completed(false);
+        setRoom2Completed(false);
+        setRoom3Completed(false);
+        setRoom4Completed(false);
         escapeDoor.DoorMovable(false);
+        SetRoomStatus(1, false);
+        SetRoomStatus(2, false);
+        SetRoomStatus(3, false);
+        SetRoomStatus(4, false);
+        password = GetComponent<Settings>().GetPassword();
         totalMinutes = GetComponent<Settings>().GetTotalMinutes();
         Debug.Log("Game duration: " + totalMinutes + " minutes");
+        PreparePasswordDistribution();
         go = GetComponent<Settings>().go;
     }
 
     /*
+     * Stores the room status of the specified room.
+     */
+    public void SetRoomStatus(int room, bool completed)
+    {
+        roomsStatus[room] = completed;
+    }
+
+    /*
+     * Prepares the password to be distibuted to the team in fragments.
+     * For every room that the team completes, a part of the scrambled password is shown.
+     * The amount of visible letters is determined by the unlockedLetterAmount value.
+     */
+    public void PreparePasswordDistribution()
+    {
+        scrambledPassword = ScramblePassword(password);
+        Debug.Log("Scrambled password: " + scrambledPassword);
+        unlockAmount = scrambledPassword.Length / 4.0;
+        Debug.Log("Unlock letters amount: " + unlockAmount);
+        unlockedLettersAmount = 0;
+    }
+
+    /*
      * Displays the countdown time to the user. If the user escapes within the given time, 
-     * the countdown is stopped.
+     * the countdown is stopped. Also shows the password display where all the letters are shown 
+     * that the team unlocked.
      */
     public void OnGUI()
     {
@@ -85,7 +122,48 @@ public class Game : MonoBehaviour {
             if (escaped)
                 GUI.color = Color.green;
             GUI.Box(new Rect(horizontalPosition, 10, 180, 60), message, GetStandardBoxStyle(40));
+            DrawPasswordGUI();
         }
+    }
+
+    /*
+     * Draws the amount of unlocked password letters on the screen. The display string is created by
+     * checking the amount of unlocked letters. The rest if filled with underscores.
+     */
+    private void DrawPasswordGUI()
+    {
+        string message = "Password letters:\n";
+        int unlockedLetters = (int)Math.Floor(unlockedLettersAmount);
+        for(int i = 0; i < unlockedLetters; i++)
+            message = message + scrambledPassword[i] + " ";
+        int amountLeft = scrambledPassword.Length - unlockedLetters;
+        for(int i = 0; i < amountLeft; i++)
+            message = message + "_ ";
+        GUI.Box(new Rect(Screen.width - 260, 10, 400, 120), message, GetStyle(30, GUIType.Label));
+    }
+
+    /*
+     * Calculates the amount of unlocked letters by 
+     */
+    /*public int GetAmountOfUnlockedLetters()
+    {
+        double unlocked = unlockedLettersAmount;
+        int letterAmount = 0;
+        while (unlocked >= 1)
+        {
+            letterAmount++;
+            unlocked = unlocked - 1;
+        }
+        return letterAmount;
+    }*/
+
+    public void updateAmountOfUnlockedLetters()
+    {
+        double newAmount = unlockedLettersAmount + unlockAmount;
+        if (newAmount > scrambledPassword.Length)
+            unlockedLettersAmount = scrambledPassword.Length;
+        else
+            unlockedLettersAmount = unlockedLettersAmount + unlockAmount;
     }
 
     /*
@@ -118,6 +196,63 @@ public class Game : MonoBehaviour {
     }
 
     /*
+     * Changes the supplied light's color, depending on the open boolean value.
+     */
+    public void ChangeLight(Light light, GameObject lamp, bool open)
+    {
+        if(open)
+        {
+            light.color = Color.green;
+            lamp.GetComponent<Renderer>().material.color = Color.green;
+        }
+        else
+        {
+            light.color = Color.red;
+            lamp.GetComponent<Renderer>().material.color = Color.red;
+        }
+    }
+
+    /*
+     * Determines the color of the room indicator depending on whether or not the room has been completed.
+     */
+    public void SetRoomIndicatorLight(Light light, GameObject lamp, int roomIndicator)
+    {
+        switch(roomIndicator)
+        {
+            case 0:
+                if (room1Completed)
+                    ChangeLight(light, lamp, true);
+                else
+                    ChangeLight(light, lamp, false);
+                break;
+            case 1:
+                if (room2Completed)
+                    ChangeLight(light, lamp, true);
+                else
+                    ChangeLight(light, lamp, false);
+                break;
+            case 2:
+                if (room3Completed)
+                    ChangeLight(light, lamp, true);
+                else
+                    ChangeLight(light, lamp, false);
+                break;
+            case 3:
+                if (room4Completed)
+                    ChangeLight(light, lamp, true);
+                else
+                    ChangeLight(light, lamp, false);
+                break;
+            default:
+                if (room1Completed)
+                    ChangeLight(light, lamp, true);
+                else
+                    ChangeLight(light, lamp, false);
+                break;
+        }
+    }
+
+    /*
      * Triggers when the user entered the correct password.
      * The escape door is opened and the indicator light changes.
      */
@@ -125,8 +260,7 @@ public class Game : MonoBehaviour {
     {
         escaped = true;
         finishTime = endTime - currentTime;
-        escapeDoorIndicatorLight.color = Color.green;
-        escapeDoorIndicatorGlass.GetComponent<Renderer>().material.color = Color.green;
+        ChangeLight(escapeDoorIndicatorLight, escapeDoorIndicatorGlass, true);
         escapeDoor.GetComponent<Door>().DoorMovable(true);
         TriggerDoorAnimation(escapeDoor);
     }
@@ -172,6 +306,25 @@ public class Game : MonoBehaviour {
             door.GetComponent<Door>().DoorMovable(false);
         else
             door.GetComponent<Door>().DoorMovable(true);
+    }
+
+    /*
+     * Scrambles the supplied password and returns the new string.
+     */
+    public string ScramblePassword(string password)
+    {
+        StringBuilder scrambledString = new StringBuilder();
+        scrambledString.Append(password);
+        int stringLength = scrambledString.Length;
+        for (int i = 0; i < stringLength; ++i)
+        {
+            int index1 = (random.Next() % stringLength);
+            int index2 = (random.Next() % stringLength);
+            Char temp = scrambledString[index1];
+            scrambledString[index1] = scrambledString[index2];
+            scrambledString[index2] = temp;
+        }
+        return scrambledString.ToString();
     }
 
     /*
@@ -227,6 +380,70 @@ public class Game : MonoBehaviour {
     public void SetStarted(bool started)
     {
         this.started = started;
+    }
+
+    /*
+     * Fetches the stored get room 1 completed boolean.
+     */
+    public bool getRoom1Completed()
+    {
+        return room1Completed;
+    }
+
+    /*
+     * Stores the get room 1 completed boolean.
+     */
+    public void setRoom1Completed(bool room1Completed)
+    {
+        this.room1Completed = room1Completed;
+    }
+
+    /*
+     * Fetches the stored get room 2 completed boolean.
+     */
+    public bool getRoom2Completed()
+    {
+        return room2Completed;
+    }
+
+    /*
+     * Stores the get room 2 completed boolean.
+     */
+    public void setRoom2Completed(bool room2Completed)
+    {
+        this.room2Completed = room2Completed;
+    }
+
+    /*
+     * Fetches the stored get room 3 completed boolean.
+     */
+    public bool getRoom3Completed()
+    {
+        return room3Completed;
+    }
+
+    /*
+     * Stores the get room 3 completed boolean.
+     */
+    public void setRoom3Completed(bool room3Completed)
+    {
+        this.room3Completed = room3Completed;
+    }
+
+    /*
+     * Fetches the stored get room 4 completed boolean.
+     */
+    public bool getRoom4Completed()
+    {
+        return room4Completed;
+    }
+
+    /*
+     * Stores the get room 4 completed boolean.
+     */
+    public void setRoom4Completed(bool room4Completed)
+    {
+        this.room4Completed = room4Completed;
     }
 
 }
