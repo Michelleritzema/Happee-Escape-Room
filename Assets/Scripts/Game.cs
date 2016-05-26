@@ -15,7 +15,6 @@ using System.Text;
 public class Game : MonoBehaviour {
 
     private static System.Random random = new System.Random();
-    private string[] modules = new string[4];
     private bool[] roomsStatus = new bool[4];
     private int totalMinutes = 60;
 
@@ -50,10 +49,10 @@ public class Game : MonoBehaviour {
         setRoom3Completed(false);
         setRoom4Completed(false);
         escapeDoor.DoorMovable(false);
+        SetRoomStatus(0, false);
         SetRoomStatus(1, false);
         SetRoomStatus(2, false);
         SetRoomStatus(3, false);
-        SetRoomStatus(4, false);
         password = GetComponent<Settings>().GetPassword();
         totalMinutes = GetComponent<Settings>().GetTotalMinutes();
         Debug.Log("Game duration: " + totalMinutes + " minutes");
@@ -141,21 +140,6 @@ public class Game : MonoBehaviour {
             message = message + "_ ";
         GUI.Box(new Rect(Screen.width - 260, 10, 400, 120), message, GetStyle(30, GUIType.Label));
     }
-
-    /*
-     * Calculates the amount of unlocked letters by 
-     */
-    /*public int GetAmountOfUnlockedLetters()
-    {
-        double unlocked = unlockedLettersAmount;
-        int letterAmount = 0;
-        while (unlocked >= 1)
-        {
-            letterAmount++;
-            unlocked = unlocked - 1;
-        }
-        return letterAmount;
-    }*/
 
     public void updateAmountOfUnlockedLetters()
     {
