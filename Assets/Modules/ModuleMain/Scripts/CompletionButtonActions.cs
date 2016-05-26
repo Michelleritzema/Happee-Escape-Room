@@ -21,7 +21,6 @@ public class CompletionButtonActions : MonoBehaviour
      */
     public void OnMouseEnter()
     {
-        Debug.Log("On mouse enter");
         button.GetComponent<Renderer>().material = active;
     }
 
@@ -31,7 +30,6 @@ public class CompletionButtonActions : MonoBehaviour
      */
     public void OnMouseDown()
     {
-        Debug.Log("On mouse down");
         button.GetComponent<Renderer>().material = clicked;
         game.GetComponent<Game>().SetRoomStatus(room, true);
         game.GetComponent<Game>().updateAmountOfUnlockedLetters();
@@ -43,7 +41,6 @@ public class CompletionButtonActions : MonoBehaviour
      */
     public void OnMouseExit()
     {
-        Debug.Log("On mouse exit");
         button.GetComponent<Renderer>().material = inactive;
     }
 
@@ -53,7 +50,6 @@ public class CompletionButtonActions : MonoBehaviour
     public void SetRoom(int room)
     {
         this.room = room;
-        Debug.Log("Setting room integer: " + room);
     }
 
 }

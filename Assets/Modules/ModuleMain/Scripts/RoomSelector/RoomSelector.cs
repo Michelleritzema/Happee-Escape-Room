@@ -47,6 +47,14 @@ public class RoomSelector : MonoBehaviour {
     }
 
     /*
+     * Updates the room indicator light.
+     */
+    public void Update()
+    {
+        game.GetComponent<Game>().SetRoomIndicatorLight(light, lightbulb, roomIndicator);
+    }
+
+    /*
      * Changes the room selector screen to display the correct room logo.
      */
     private void ChangeDisplay()
@@ -69,7 +77,7 @@ public class RoomSelector : MonoBehaviour {
                 displayScreen.GetComponent<Renderer>().material.mainTexture = logo1;
                 break;
         }
-        game.GetComponent<Game>().SetRoomIndicatorLight(light, lightbulb, roomIndicator);
+        //game.GetComponent<Game>().SetRoomIndicatorLight(light, lightbulb, roomIndicator);
     }
 
     /*

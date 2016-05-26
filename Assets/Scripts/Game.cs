@@ -21,7 +21,7 @@ public class Game : MonoBehaviour {
     private DateTime startTime, endTime, currentTime;
     private TimeSpan finishTime;
     private string go, password, scrambledPassword;
-    private bool started, escaped, room1Completed, room2Completed, room3Completed, room4Completed;
+    private bool started, escaped;
     private double unlockAmount, unlockedLettersAmount;
 
     public GameObject roomSelector, escapeDoorIndicatorGlass;
@@ -44,10 +44,6 @@ public class Game : MonoBehaviour {
         SwitchToInitialCamera();
         escaped = false;
         SetStarted(false);
-        setRoom1Completed(false);
-        setRoom2Completed(false);
-        setRoom3Completed(false);
-        setRoom4Completed(false);
         escapeDoor.DoorMovable(false);
         SetRoomStatus(0, false);
         SetRoomStatus(1, false);
@@ -58,14 +54,6 @@ public class Game : MonoBehaviour {
         Debug.Log("Game duration: " + totalMinutes + " minutes");
         PreparePasswordDistribution();
         go = GetComponent<Settings>().go;
-    }
-
-    /*
-     * Stores the room status of the specified room.
-     */
-    public void SetRoomStatus(int room, bool completed)
-    {
-        roomsStatus[room] = completed;
     }
 
     /*
@@ -138,9 +126,13 @@ public class Game : MonoBehaviour {
         int amountLeft = scrambledPassword.Length - unlockedLetters;
         for(int i = 0; i < amountLeft; i++)
             message = message + "_ ";
+        GUI.color = Color.white;
         GUI.Box(new Rect(Screen.width - 260, 10, 400, 120), message, GetStyle(30, GUIType.Label));
     }
 
+    /*
+     * Updates the unlockedLettersAmount so that more letters become uncovered.
+     */
     public void updateAmountOfUnlockedLetters()
     {
         double newAmount = unlockedLettersAmount + unlockAmount;
@@ -204,31 +196,31 @@ public class Game : MonoBehaviour {
         switch(roomIndicator)
         {
             case 0:
-                if (room1Completed)
+                if (roomsStatus[0])
                     ChangeLight(light, lamp, true);
                 else
                     ChangeLight(light, lamp, false);
                 break;
             case 1:
-                if (room2Completed)
+                if (roomsStatus[1])
                     ChangeLight(light, lamp, true);
                 else
                     ChangeLight(light, lamp, false);
                 break;
             case 2:
-                if (room3Completed)
+                if (roomsStatus[2])
                     ChangeLight(light, lamp, true);
                 else
                     ChangeLight(light, lamp, false);
                 break;
             case 3:
-                if (room4Completed)
+                if (roomsStatus[3])
                     ChangeLight(light, lamp, true);
                 else
                     ChangeLight(light, lamp, false);
                 break;
             default:
-                if (room1Completed)
+                if (roomsStatus[0])
                     ChangeLight(light, lamp, true);
                 else
                     ChangeLight(light, lamp, false);
@@ -351,6 +343,22 @@ public class Game : MonoBehaviour {
     }
 
     /*
+     * Fetches the stored room status boolean of the specified room.
+     */
+    public bool GetRoomStatus(int room)
+    {
+        return roomsStatus[room];
+    }
+
+    /*
+     * Stores the room status boolean of the specified room.
+     */
+    public void SetRoomStatus(int room, bool completed)
+    {
+        roomsStatus[room] = completed;
+    }
+
+    /*
      * Fetches the stored get started boolean.
      */
     public bool GetStarted()
@@ -364,70 +372,6 @@ public class Game : MonoBehaviour {
     public void SetStarted(bool started)
     {
         this.started = started;
-    }
-
-    /*
-     * Fetches the stored get room 1 completed boolean.
-     */
-    public bool getRoom1Completed()
-    {
-        return room1Completed;
-    }
-
-    /*
-     * Stores the get room 1 completed boolean.
-     */
-    public void setRoom1Completed(bool room1Completed)
-    {
-        this.room1Completed = room1Completed;
-    }
-
-    /*
-     * Fetches the stored get room 2 completed boolean.
-     */
-    public bool getRoom2Completed()
-    {
-        return room2Completed;
-    }
-
-    /*
-     * Stores the get room 2 completed boolean.
-     */
-    public void setRoom2Completed(bool room2Completed)
-    {
-        this.room2Completed = room2Completed;
-    }
-
-    /*
-     * Fetches the stored get room 3 completed boolean.
-     */
-    public bool getRoom3Completed()
-    {
-        return room3Completed;
-    }
-
-    /*
-     * Stores the get room 3 completed boolean.
-     */
-    public void setRoom3Completed(bool room3Completed)
-    {
-        this.room3Completed = room3Completed;
-    }
-
-    /*
-     * Fetches the stored get room 4 completed boolean.
-     */
-    public bool getRoom4Completed()
-    {
-        return room4Completed;
-    }
-
-    /*
-     * Stores the get room 4 completed boolean.
-     */
-    public void setRoom4Completed(bool room4Completed)
-    {
-        this.room4Completed = room4Completed;
     }
 
 }
