@@ -27,41 +27,32 @@ public class ButtonActions : MonoBehaviour {
     }
 
     /*
-     * Changes the button's colour when the mouse hovers over the button.
+     * Changes the button's colour to inactive.
      */
-    public void OnMouseEnter()
+    public void SetToInactive()
+    {
+        button.GetComponent<Renderer>().material.color = normalColour;
+    }
+
+    /*
+     * Changes the button's colour to active.
+     */
+    public void SetToActive()
     {
         button.GetComponent<Renderer>().material.color = focusColour;
     }
 
     /*
-     * Changes the button's colour when the mouse presses the button.
-     * Also calls the corresponding letter panel's letter update method,
-     * depending on whether the up boolean is true or false. 
+     * Changes the button's colour to clicked. Also calls the corresponding letter panel's 
+     * letter update method, depending on whether the up boolean is true or false. 
      */
-    public void OnMouseDown()
+    public void ClickOnObject()
     {
         button.GetComponent<Renderer>().material.color = clickedColour;
         if(up)
             letterPanel.GetComponent<LetterChanger>().MoveUp();
         else
             letterPanel.GetComponent<LetterChanger>().MoveDown();
-    }
-
-    /*
-     * Changes the button's colour when the mouse is done pressing the button.
-     */
-    public void OnMouseUp()
-    {
-        button.GetComponent<Renderer>().material.color = normalColour;
-    }
-
-    /*
-     * Changes the button's colour when the mouse no longer hovers over the button.
-     */
-    public void OnMouseExit()
-    {
-        button.GetComponent<Renderer>().material.color = normalColour;
     }
 
 }

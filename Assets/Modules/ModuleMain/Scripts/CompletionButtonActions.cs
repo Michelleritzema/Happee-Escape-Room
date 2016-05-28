@@ -17,18 +17,18 @@ public class CompletionButtonActions : MonoBehaviour
     private int room;
 
     /*
-     * Changes the button's texture when the mouse hovers over the button.
+     * Changes the button's texture to active.
      */
-    public void OnMouseEnter()
+    public void SetToActive()
     {
         button.GetComponent<Renderer>().material = active;
     }
 
     /*
-     * Changes the button's texture when the mouse presses the button.
+     * Changes the button's texture to clicked.
      * Sets the room status to completed and updates the unlocked password letters;
      */
-    public void OnMouseDown()
+    public void ClickOnObject()
     {
         button.GetComponent<Renderer>().material = clicked;
         game.GetComponent<Game>().SetRoomStatus(room, true);
@@ -37,9 +37,9 @@ public class CompletionButtonActions : MonoBehaviour
     }
 
     /*
-     * Changes the button's texture when the mouse no longer hovers over the button.
+     * Changes the button's texture to inactive.
      */
-    public void OnMouseExit()
+    public void SetToInactive()
     {
         button.GetComponent<Renderer>().material = inactive;
     }

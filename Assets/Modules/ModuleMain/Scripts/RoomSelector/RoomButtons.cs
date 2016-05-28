@@ -15,40 +15,32 @@ public class RoomButtons : MonoBehaviour
     public bool moveRight;
 
     /*
-     * Changes the button's texture when the mouse hovers over the button.
+     * Changes the button's texture to active.
      */
-    public void OnMouseEnter()
+    public void SetToActive()
     {
         button.GetComponent<Renderer>().material = active;
     }
 
     /*
-     * Changes the button's texture when the mouse presses the button.
+     * Changes the button's texture to inactive.
+     */
+    public void SetToInactive()
+    {
+        button.GetComponent<Renderer>().material = inactive;
+    }
+
+    /*
+     * Changes the button's texture to clicked.
      * The active room is changed, according to which button has been pressed.
      */
-    public void OnMouseDown()
+    public void ClickOnObject()
     {
         button.GetComponent<Renderer>().material = clicked;
         if(moveRight)
             roomSelector.GetComponent<RoomSelector>().ChangeRooms(true);
        else
             roomSelector.GetComponent<RoomSelector>().ChangeRooms(false);
-    }
-
-    /*
-     * Changes the button's texture when the mouse is done pressing the button.
-     */
-    public void OnMouseUp()
-    {
-        button.GetComponent<Renderer>().material = active;
-    }
-
-    /*
-     * Changes the button's texture when the mouse no longer hovers over the button.
-     */
-    public void OnMouseExit()
-    {
-        button.GetComponent<Renderer>().material = inactive;
     }
 
 }

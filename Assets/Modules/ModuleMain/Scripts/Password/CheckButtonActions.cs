@@ -14,36 +14,28 @@ public class CheckButtonActions : MonoBehaviour {
     public Texture active, inactive, clicked;
 
     /*
-     * Changes the button's texture when the mouse hovers over the button.
+     * Changes the button's texture to active.
      */
-    public void OnMouseEnter()
+    public void SetToActive()
     {
         checkButton.GetComponent<Renderer>().material.mainTexture = active;
     }
 
     /*
-     * Changes the button's texture when the mouse presses the button.
+     * Changes the button's texture to inactive.
      */
-    public void OnMouseDown()
+    public void SetToInactive()
+    {
+        checkButton.GetComponent<Renderer>().material.mainTexture = inactive;
+    }
+
+    /*
+     * Changes the button's texture to clicked and checks the password.
+     */
+    public void ClickOnObject()
     {
         checkButton.GetComponent<Renderer>().material.mainTexture = clicked;
         passwordPanel.GetComponent<PasswordTerminal>().CheckPassword();
-    }
-
-    /*
-     * Changes the button's texture when the mouse is done pressing the button.
-     */
-    public void OnMouseUp()
-    {
-        checkButton.GetComponent<Renderer>().material.mainTexture = active;
-    }
-
-    /*
-     * Changes the button's texture when the mouse no longer hovers over the button.
-     */
-    public void OnMouseExit()
-    {
-        checkButton.GetComponent<Renderer>().material.mainTexture = inactive;
     }
 
 }

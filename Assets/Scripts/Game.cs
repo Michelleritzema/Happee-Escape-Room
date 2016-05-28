@@ -79,6 +79,7 @@ public class Game : MonoBehaviour {
     {
         if(started)
         {
+            Cursor.visible = false;
             currentTime = DateTime.Now;
             TimeSpan timeLeft;
             if (!escaped)
