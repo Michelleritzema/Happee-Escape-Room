@@ -17,6 +17,9 @@ public class PasswordTerminal : MonoBehaviour {
     private Dictionary<int, string> letterTranslator = new Dictionary<int, string>();
     private readonly string alphabet = "abcdefghijklmnopqrstuvwxyz";
     private string password = "default";
+    private int displayNotCompletedWarning = 0;
+
+    private string notCompletedWarning;
 
     public Game game;
     public GameObject letter1, letter2, letter3, letter4, letter5, 
@@ -28,10 +31,22 @@ public class PasswordTerminal : MonoBehaviour {
      */
     public void Start () {
         password = game.GetComponent<Settings>().GetPassword();
-        Debug.Log("Stored password: " + password);
         InitializePanel();
         InitializeLetterDictionary();
         PreparePasswordPanel();
+        notCompletedWarning = game.GetComponent<Settings>().notCompletedWarning;
+    }
+
+    /*
+     * Displays a warning message to the user if the password is being checked without completing all the puzzles.
+     */
+    public void OnGUI()
+    {
+        if(displayNotCompletedWarning > 0)
+        {
+            GUI.Box(new Rect(40, 40, 340, 60), notCompletedWarning, game.GetComponent<Game>().GetStandardBoxStyle(20));
+            displayNotCompletedWarning--;
+        }
     }
 
     /*
@@ -101,11 +116,17 @@ public class PasswordTerminal : MonoBehaviour {
     /*
      * Determines the password that the user has submitted and compares this to the predefined one.
      * If it matches, the game will call the escaping method in the game script.
+     * The password can only be checked if all the puzzle rooms are completed. If not the user sees a message.
      */
     public void CheckPassword () {
-        string passwordAttempt = FetchSubmittedPassword();
-        if (passwordAttempt.Equals(password))
-            game.GetComponent<Game>().Escaping();
+        if(!game.GetComponent<Game>().GetCompleted())
+            displayNotCompletedWarning = 200;
+        else
+        {
+            string passwordAttempt = FetchSubmittedPassword();
+            if (passwordAttempt.Equals(password))
+                game.GetComponent<Game>().Escaping();
+        }
 	}
 
     /*
