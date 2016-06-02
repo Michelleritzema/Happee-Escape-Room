@@ -15,6 +15,7 @@ public class Reticle : MonoBehaviour {
     private string tagPasswordButtonCheck = "PasswordButtonCheck";
     private string tagRoomSelectorButton = "RoomSelectorButton";
     private string tagRoomDoneButton = "DoneButton";
+	private string tagDialogeButton = "Dialoge";
 
     private GameObject lastObject;
     private Vector3 originalScale;

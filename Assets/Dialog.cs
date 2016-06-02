@@ -7,6 +7,7 @@ public class Dialog : MonoBehaviour {
     bool DisplayText = false;
 	// Use this for initialization
 	void Start () {
+		onGUI ();
 	
 	}
 	
@@ -17,14 +18,9 @@ public class Dialog : MonoBehaviour {
 
     void onGUI()
     {
-        GUILayout.BeginArea(new Rect(700, 600, 400, 400));
-        if (DisplayText)
-        {
-            GUILayout.Label(PatientText[0]);
-            GUILayout.Button(Questions[0]);
-            GUILayout.Label(PatientText[1]);
-
-        }
+        GUILayout.BeginArea(new Rect(10, 10, 100, 100));
+        GUILayout.Button("Click me");
+        GUILayout.Button("Or me");
         GUILayout.EndArea();
     }
 
