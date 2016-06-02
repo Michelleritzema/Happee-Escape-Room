@@ -1,0 +1,163 @@
+fileFormatVersion: 2
+guid: 2d7f53cd10870bd498682e8a501db35e
+timeCreated: 1464601621
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Box272_4
+    100002: Box273_5
+    100004: Box27_3
+    100006: Box282_7
+    100008: Box283_8
+    100010: Box28_6
+    100012: Box30_10
+    100014: ChamferCyl17_16
+    100016: ChamferCyl18_18
+    100018: //RootNode
+    100020: Line50_9
+    100022: Line52_14
+    100024: Line53_15
+    100026: Line54_17
+    100028: Loft02_13
+    100030: Loft10_1
+    100032: Loft11_2
+    100034: Rectangle10_12
+    100036: Rectangle11_11
+    400000: Box272_4
+    400002: Box273_5
+    400004: Box27_3
+    400006: Box282_7
+    400008: Box283_8
+    400010: Box28_6
+    400012: Box30_10
+    400014: ChamferCyl17_16
+    400016: ChamferCyl18_18
+    400018: //RootNode
+    400020: Line50_9
+    400022: Line52_14
+    400024: Line53_15
+    400026: Line54_17
+    400028: Loft02_13
+    400030: Loft10_1
+    400032: Loft11_2
+    400034: Rectangle10_12
+    400036: Rectangle11_11
+    2300000: Box272_4
+    2300002: Box273_5
+    2300004: Box27_3
+    2300006: Box282_7
+    2300008: Box283_8
+    2300010: Box28_6
+    2300012: Box30_10
+    2300014: ChamferCyl17_16
+    2300016: ChamferCyl18_18
+    2300018: Line50_9
+    2300020: Line52_14
+    2300022: Line53_15
+    2300024: Line54_17
+    2300026: Loft02_13
+    2300028: Loft10_1
+    2300030: Loft11_2
+    2300032: Rectangle10_12
+    2300034: Rectangle11_11
+    3300000: Box272_4
+    3300002: Box273_5
+    3300004: Box27_3
+    3300006: Box282_7
+    3300008: Box283_8
+    3300010: Box28_6
+    3300012: Box30_10
+    3300014: ChamferCyl17_16
+    3300016: ChamferCyl18_18
+    3300018: Line50_9
+    3300020: Line52_14
+    3300022: Line53_15
+    3300024: Line54_17
+    3300026: Loft02_13
+    3300028: Loft10_1
+    3300030: Loft11_2
+    3300032: Rectangle10_12
+    3300034: Rectangle11_11
+    4300000: Box272_4
+    4300002: Box273_5
+    4300004: Box27_3
+    4300006: Box282_7
+    4300008: Box283_8
+    4300010: Box28_6
+    4300012: Box30_10
+    4300014: ChamferCyl17_16
+    4300016: ChamferCyl18_18
+    4300018: Line50_9
+    4300020: Line52_14
+    4300022: Line53_15
+    4300024: Line54_17
+    4300026: Loft02_13
+    4300028: Loft10_1
+    4300030: Loft11_2
+    4300032: Rectangle10_12
+    4300034: Rectangle11_11
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
