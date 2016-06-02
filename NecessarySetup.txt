@@ -10,7 +10,7 @@
 | MySQL         Xampp              |
 | Jenkins       Cygwin             |
 | Git           Google Chrome      |
-| Git LFS                          |
+| Git LFS       Blender            |
 |__________________________________|
 
  __________________________________
