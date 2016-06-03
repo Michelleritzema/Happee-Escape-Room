@@ -2,16 +2,19 @@
 using System.Collections;
 using System.IO;
 using LitJson;
+using System.Collections.Generic;
 
 /*
  * Created by Michelle Ritzema.
  * 
  * Class that contains all the settings that the server supplied when building the application.
  * These settings are stored and can be read with the getter methods.
+ * 
+ * Dictionary created by Sander de Leng.
  */
 
 public class Settings : MonoBehaviour {
-
+    public Dictionary<string,string> postData;
     private JsonData settings;
     private string jsonString, teamName, password, module1, module2, module3, module4, 
         startTime, finishTime, module1Time, module2Time, module3Time, module4Time;
@@ -151,5 +154,14 @@ public class Settings : MonoBehaviour {
     {
         this.module4Time = time;
     }
-
+    public void dataValues()
+    {
+        postData = new Dictionary<string, string>();
+        postData.Add("tijd over", finishTime);
+        postData.Add("Team naam", teamName);
+        postData.Add("Totale minuten", totalMinutes.ToString());
+        postData.Add("module 1 tijd", module1Time);
+        postData.Add("module 2 tijd", module2Time);
+        postData.Add("module 3 tijd", module3Time);
+    }
 }

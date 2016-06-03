@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /*
  * Created by Michelle Ritzema.
@@ -9,12 +10,13 @@ using System.Collections;
 
 public class CompletionButtonActions : MonoBehaviour
 {
-
+    public SendData sendData;
     public Game game;
     public GameObject button;
     public Material active, inactive, clicked;
 
     private int room;
+    private Dictionary<string, string> dataPost;
 
     /*
      * Changes the button's texture to active.
@@ -34,6 +36,7 @@ public class CompletionButtonActions : MonoBehaviour
         game.GetComponent<Game>().SetRoomStatus(room, true);
         game.GetComponent<Game>().SetRoomTime(room);
         game.GetComponent<Game>().UpdateAmountOfUnlockedLetters();
+        //sendData.GetComponent<SendData>().POST("url", dataPost);
         button.SetActive(false);
     }
 
