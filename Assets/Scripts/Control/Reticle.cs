@@ -15,14 +15,18 @@ public class Reticle : MonoBehaviour {
     private string tagPasswordButtonCheck = "PasswordButtonCheck";
     private string tagRoomSelectorButton = "RoomSelectorButton";
     private string tagRoomDoneButton = "DoneButton";
-	private string tagDialogeButton = "Dialoge";
+	private string tagDialogeButton = "DialogueTag";
+    private string tagLaptop = "PC";
+    private string tagPcScreen = "PcScreen";
 
+    public Game game;
     private GameObject lastObject;
     private Vector3 originalScale;
     private Door visibleDoor;
     private bool inReach;
 
-    public Camera playerCamera;
+    public Camera playerCamera, PcCamera;
+    
 
     /*
      * Stores the original reticle scale;
@@ -105,7 +109,7 @@ public class Reticle : MonoBehaviour {
      */
     public void HandleObjectInteraction(GameObject hitObject)
     {
-        if(hitObject.tag == tagDoor)
+        if (hitObject.tag == tagDoor)
         {
             SetDoor(hitObject);
             if (Input.GetKey(KeyCode.E) && visibleDoor.GetRunning() == false)
@@ -124,7 +128,7 @@ public class Reticle : MonoBehaviour {
                 hitObject.GetComponent<CheckButtonActions>().ClickOnObject();
             else
                 hitObject.GetComponent<CheckButtonActions>().SetToActive();
-        } 
+        }
         else if (hitObject.tag == tagRoomSelectorButton)
         {
             if (Input.GetKeyDown(KeyCode.E))
@@ -138,6 +142,18 @@ public class Reticle : MonoBehaviour {
                 hitObject.GetComponent<CompletionButtonActions>().ClickOnObject();
             else
                 hitObject.GetComponent<CompletionButtonActions>().SetToActive();
+        }
+        else if (hitObject.tag == tagLaptop)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+                hitObject.GetComponent<PcButton>().ClickOnObject();
+            else
+                hitObject.GetComponent<PcButton>().SetToActive();
+        }
+        else if(hitObject.tag == tagDialogeButton)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+                hitObject.GetComponent<dialogueHandler>().UpdateText();
         }
     }
 

@@ -25,7 +25,7 @@ public class Game : MonoBehaviour {
     private double unlockAmount, unlockedLettersAmount;
 
     public GameObject roomSelector, escapeDoorIndicatorGlass;
-    public Camera initialCamera, playerCamera;
+    public Camera initialCamera, playerCamera, PcCamera;
     public Light escapeDoorIndicatorLight;
     public Door escapeDoor, puzzleDoor;
 
@@ -54,8 +54,10 @@ public class Game : MonoBehaviour {
      */
     public void Update()
     {
-        if (started)
+        if (started && playerCamera.gameObject.activeSelf == true)
             Cursor.visible = false;
+        else
+            Cursor.visible = true;
         if (roomsStatus[0] && roomsStatus[1] && roomsStatus[2] && roomsStatus[3])
             completed = true;
     }
@@ -179,6 +181,7 @@ public class Game : MonoBehaviour {
     {
         initialCamera.gameObject.SetActive(true);
         playerCamera.gameObject.SetActive(false);
+        PcCamera.gameObject.SetActive(false);
     }
 
     /*
@@ -188,8 +191,15 @@ public class Game : MonoBehaviour {
     {
         initialCamera.gameObject.SetActive(false);
         playerCamera.gameObject.SetActive(true);
+        PcCamera.gameObject.SetActive(false);
     }
 
+    public void SwitchToLaptopCamera()
+    {
+        PcCamera.gameObject.SetActive(true);
+        playerCamera.gameObject.SetActive(false);
+        initialCamera.gameObject.SetActive(false);
+    }
     /*
      * Changes the supplied light's color, depending on the open boolean value.
      */
