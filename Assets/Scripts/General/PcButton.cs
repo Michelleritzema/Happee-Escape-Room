@@ -13,6 +13,7 @@ public class PcButton : MonoBehaviour
     public GameObject button;
     public Material active, inactive, clicked;
     public Game game;
+    public bool laptopDone;
 
 
     /*
@@ -25,13 +26,14 @@ public class PcButton : MonoBehaviour
 
     /*
      * Changes the button's texture to clicked.
-     * Sets the room status to completed and updates the unlocked password letters;
+     * Switches the active camera to the laptopscreen
      */
     public void ClickOnObject()
     {
         button.GetComponent<Renderer>().material = clicked;
         game.GetComponent<Game>().SwitchToLaptopCamera();
         button.SetActive(false);
+        laptopDone = true;
     }
 
     /*

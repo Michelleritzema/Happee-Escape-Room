@@ -13,9 +13,12 @@ public class CompletionButtonActions : MonoBehaviour
     public Game game;
     public GameObject button;
     public Material active, inactive, clicked;
+    public bool laptopDone, diaDone;
 
     private int room;
     private Dictionary<string, string> dataPost;
+    private string tagButton;
+    private string tagMedical = "antw4";
 
     /*
      * Changes the button's texture to active.
@@ -31,11 +34,31 @@ public class CompletionButtonActions : MonoBehaviour
      */
     public void ClickOnObject()
     {
-        button.GetComponent<Renderer>().material = clicked;
-        game.GetComponent<Game>().SetRoomStatus(room, true);
-        game.GetComponent<Game>().SetRoomTime(room);
-        game.GetComponent<Game>().UpdateAmountOfUnlockedLetters();
-        button.SetActive(false);
+        if (tagButton == tagMedical)
+        {
+            GameObject pc = GameObject.Find("PcButton");
+            GameObject dh = GameObject.Find("DialogueButton");
+            PcButton pcButton = pc.transform.Find("Button").GetComponent<PcButton>();
+            dialogueHandler dialogueHandler = dh.GetComponent<dialogueHandler>();
+            laptopDone = pcButton.laptopDone;
+            diaDone = dialogueHandler.diaDone;
+            if (laptopDone == true && diaDone == true)
+            {
+                button.GetComponent<Renderer>().material = clicked;
+                game.GetComponent<Game>().SetRoomStatus(room, true);
+                game.GetComponent<Game>().SetRoomTime(room);
+                game.GetComponent<Game>().UpdateAmountOfUnlockedLetters();
+                button.SetActive(false);
+            }
+        } else
+        {
+            button.GetComponent<Renderer>().material = clicked;
+            game.GetComponent<Game>().SetRoomStatus(room, true);
+            game.GetComponent<Game>().SetRoomTime(room);
+            game.GetComponent<Game>().UpdateAmountOfUnlockedLetters();
+            button.SetActive(false);
+        }
+
     }
 
     /*

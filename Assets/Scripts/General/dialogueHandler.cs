@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class dialogueHandler : MonoBehaviour {
     public Text text;
-    public 
+    public bool diaDone;
 	// Use this for initialization
 	void Start () {
 	
@@ -23,6 +23,8 @@ public class dialogueHandler : MonoBehaviour {
         b.onClick.AddListener(() => {
             dialoguePatient.text = "Ik voel mij niet zo goed..";
             t.text = "Dat is niet zo fijn waar heeft u last van?";
+            diaDone = true;
         });
+        
     }
 }

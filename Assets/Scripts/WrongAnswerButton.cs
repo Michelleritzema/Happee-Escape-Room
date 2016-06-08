@@ -6,22 +6,29 @@ public class WrongAnswerButton : MonoBehaviour {
 
     public Game game;
     public GameObject button;
-    public TimeSpan timeReduce;
     private int room;
+    public bool laptopDone, diaDone;
 
-    /*
-     * Changes the button's texture to active.
-     */
  
     /*
      * Changes the button's texture to clicked.
-     * Sets the room status to completed and updates the unlocked password letters;
+     * subtracts time from the remaining time.
      */
  
     public void ClickOnObject()
     {
-        game.GetComponent<Game>().SubtractTime();
-        button.SetActive(false);
+        GameObject pc = GameObject.Find("PcButton");
+        GameObject dh = GameObject.Find("DialogueButton");
+        PcButton pcButton = pc.transform.Find("Button").GetComponent<PcButton>();
+        dialogueHandler dialogueHandler = dh.GetComponent<dialogueHandler>();
+        laptopDone = pcButton.laptopDone;
+        diaDone = dialogueHandler.diaDone;
+        if (laptopDone == true && diaDone == true)
+        {
+            game.GetComponent<Game>().SubtractTime();
+            button.SetActive(false);
+        }
+           
     }
 
 }

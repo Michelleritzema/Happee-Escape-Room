@@ -9,14 +9,15 @@ public class LaptopScreen : MonoBehaviour
     public Texture texture;
     public Rect windowRectangle;
     public Camera PcCamera;
-    public float time = 5;
     // Use this for initialization
     void Start()
     {
         windowRectangle = new Rect((Screen.width / 2) - 700, (Screen.height / 2) - 400, width, height);
 
     }
-
+    /*
+     * creates the image of the laptop screen and handles the switching of the cameras
+     */
     public void OnGUI()
     {
         if (PcCamera.gameObject.activeSelf == true)
@@ -29,18 +30,5 @@ public class LaptopScreen : MonoBehaviour
         }
         
     }
-   /* public void Update()
-    {
-        {
-            if (PcCamera.gameObject.activeSelf == true)
-            {
-                time -= Time.deltaTime;
-                if (time < 0)
-                {
-                    game.GetComponent<Game>().SwitchToPlayerCamera();
-                }
-            }
-        }
-    }
-    */
+
 }
