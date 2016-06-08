@@ -18,6 +18,11 @@ public class Reticle : MonoBehaviour {
 	private string tagDialogeButton = "DialogueTag";
     private string tagLaptop = "PC";
     private string tagPcScreen = "PcScreen";
+    private string tagAnsw = "antw4";
+    private string tagWrongAnsw = "antw1";
+    private string tagWrongAnsw1 = "antw2";
+    private string tagWrongAnsw2 = "antw3";
+
 
     public Game game;
     private GameObject lastObject;
@@ -155,8 +160,18 @@ public class Reticle : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.E))
                 hitObject.GetComponent<dialogueHandler>().UpdateText();
         }
+        else if (hitObject.tag == tagAnsw)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+                hitObject.GetComponent<CompletionButtonActions>().ClickOnObject();
+        }
+        else if (hitObject.tag == tagWrongAnsw || hitObject.tag == tagWrongAnsw1 || hitObject.tag == tagWrongAnsw2)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+                hitObject.GetComponent<WrongAnswerButton>().ClickOnObject();
+        }
     }
-
+    
     /*
      * Sets the visible door.
      */

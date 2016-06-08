@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 public class CompletionButtonActions : MonoBehaviour
 {
-    public SendData sendData;
     public Game game;
     public GameObject button;
     public Material active, inactive, clicked;
@@ -36,7 +35,6 @@ public class CompletionButtonActions : MonoBehaviour
         game.GetComponent<Game>().SetRoomStatus(room, true);
         game.GetComponent<Game>().SetRoomTime(room);
         game.GetComponent<Game>().UpdateAmountOfUnlockedLetters();
-        //sendData.GetComponent<SendData>().POST("url", dataPost);
         button.SetActive(false);
     }
 

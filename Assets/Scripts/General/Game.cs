@@ -23,6 +23,8 @@ public class Game : MonoBehaviour {
     private string go, password, scrambledPassword;
     private bool started, completed, escaped;
     private double unlockAmount, unlockedLettersAmount;
+    private TimeSpan timeLeft;
+    public TimeSpan penalty = TimeSpan.FromSeconds(30), totalPenalty;
 
     public GameObject roomSelector, escapeDoorIndicatorGlass;
     public Camera initialCamera, playerCamera, PcCamera;
@@ -103,11 +105,11 @@ public class Game : MonoBehaviour {
         if(started)
         {
             currentTime = DateTime.Now;
-            TimeSpan timeLeft;
+            
             if (!escaped)
-                timeLeft = endTime - currentTime;
+                timeLeft = endTime - currentTime - totalPenalty;
             else
-                timeLeft = finishTime;
+                timeLeft = finishTime - totalPenalty;
             if((currentTime - startTime).Seconds < 5 && currentTime.Minute.Equals(startTime.Minute))
                 GUI.Label(new Rect((Screen.width / 2) - 80, (Screen.height / 2) - 100, 200, 100), go, GetStyle(80, GUIType.Label));
             DrawCountdownGUI(timeLeft);
@@ -173,6 +175,16 @@ public class Game : MonoBehaviour {
         GetComponent<Settings>().SetStartTime(startTime.ToString());
         endTime = startTime.AddMinutes(totalMinutes);
     }
+
+    /*
+     * Gives a penalty to the player when pressing the wrong answer button
+     */
+    public void  SubtractTime()
+    { 
+        totalPenalty = totalPenalty + penalty;
+  
+    }
+     
 
     /*
      * Activates the initial camera and deactivates the player camera.

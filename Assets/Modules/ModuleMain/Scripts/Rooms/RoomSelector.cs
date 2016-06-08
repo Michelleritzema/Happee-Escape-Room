@@ -36,7 +36,7 @@ public class RoomSelector : MonoBehaviour {
         rooms[1] = GameObject.Find(room2);
         rooms[2] = GameObject.Find(room3);
         rooms[3] = GameObject.Find(room4);
-        rooms[0].transform.Find("DoneButton").transform.Find("Button").GetComponent<CompletionButtonActions>().SetRoom(0);
+        rooms[0].transform.Find("AnswerButtons").transform.Find("Answer 3").GetComponent<CompletionButtonActions>().SetRoom(0);
         rooms[1].transform.Find("DoneButton").transform.Find("Button").GetComponent<CompletionButtonActions>().SetRoom(1);
         rooms[2].transform.Find("DoneButton").transform.Find("Button").GetComponent<CompletionButtonActions>().SetRoom(2);
         rooms[3].transform.Find("DoneButton").transform.Find("Button").GetComponent<CompletionButtonActions>().SetRoom(3);
