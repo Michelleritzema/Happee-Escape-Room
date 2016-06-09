@@ -36,23 +36,28 @@ public class CompletionButtonActions : MonoBehaviour
      */
     public void ClickOnObject()
     {
-        GameObject ab = GameObject.Find("AnswerButtons");
-        CompletionButtonActions answerbuttons = ab.transform.Find("Answer 3").GetComponent<CompletionButtonActions>();
-        if (answerbuttons.clicked)
+        int roomIndicator = GameObject.Find("RoomSelector").GetComponent<RoomSelector>().GetRoomIndicator();
+        string currentRoom = game.GetComponent<Settings>().GetModule(roomIndicator);
+        if (currentRoom.Equals("ModuleMedicalResearch"))
         {
-            GameObject pc = GameObject.Find("PcButton");
-            GameObject dh = GameObject.Find("DialogueButton");
-            PcButton pcButton = pc.transform.Find("Button").GetComponent<PcButton>();
-            DialogueHandler dialogueHandler = dh.GetComponent<DialogueHandler>();
-            laptopDone = pcButton.laptopDone;
-            diaDone = dialogueHandler.diaDone;
-            if (laptopDone == true && diaDone == true)
+            GameObject ab = GameObject.Find("AnswerButtons");
+            CompletionButtonActions answerbuttons = ab.transform.Find("Answer 3").GetComponent<CompletionButtonActions>();
+            if(answerbuttons.clicked)
             {
-                button.GetComponent<Renderer>().material = clicked;
-                game.GetComponent<Game>().SetRoomStatus(room, true);
-                game.GetComponent<Game>().SetRoomTime(room);
-                game.GetComponent<Game>().UpdateAmountOfUnlockedLetters();
-                button.SetActive(false);
+                GameObject pc = GameObject.Find("PcButton");
+                GameObject dh = GameObject.Find("DialogueButton");
+                PcButton pcButton = pc.transform.Find("Button").GetComponent<PcButton>();
+                DialogueHandler dialogueHandler = dh.GetComponent<DialogueHandler>();
+                laptopDone = pcButton.laptopDone;
+                diaDone = dialogueHandler.diaDone;
+                if (laptopDone == true && diaDone == true)
+                {
+                    button.GetComponent<Renderer>().material = clicked;
+                    game.GetComponent<Game>().SetRoomStatus(room, true);
+                    game.GetComponent<Game>().SetRoomTime(room);
+                    game.GetComponent<Game>().UpdateAmountOfUnlockedLetters();
+                    button.SetActive(false);
+                }
             }
         }
         else

@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.IO;
 using LitJson;
 using System.Collections.Generic;
-using System;
+using System.Reflection;
 
 /*
  * Created by Michelle Ritzema.
@@ -26,7 +25,21 @@ public class Settings : MonoBehaviour {
      * Initializes the class by reading the JSON files and storing the collected data.
      */
     public void Start() {
+#if UNITY_EDITOR
         jsonString = File.ReadAllText(Application.dataPath + "/Settings/settings_test.json");
+#else
+        string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        DirectoryInfo dataDirectory = Directory.GetParent(path).Parent;
+        StreamReader settingsReader = new StreamReader(dataDirectory + "/settings.json");
+        string jsonText="";
+        while (jsonText != null)
+        {
+	        jsonText = settingsReader.ReadLine();
+	        if (jsonText != null)
+		        jsonString = jsonString + jsonText;
+        }
+        settingsReader.Close();
+#endif
         settings = JsonMapper.ToObject(jsonString);
         password = settings["password"].ToString();
         totalMinutes = int.Parse(settings["totalMinutes"].ToString());
@@ -43,18 +56,28 @@ public class Settings : MonoBehaviour {
      */
     private void loadStrings()
     {
-        switch(language)
+        string path;
+        switch (language)
         {
             case "dutch":
-                jsonString = File.ReadAllText(Application.dataPath + "/Settings/strings_dutch.json");
+                //path = "/Strings/strings_dutch.json";
+                path = "Strings/strings_dutch";
                 break;
             case "english":
-                jsonString = File.ReadAllText(Application.dataPath + "/Settings/strings_english.json");
+                //path = "/Strings/strings_english.json";
+                path = "Strings/strings_english";
                 break;
             default:
-                jsonString = File.ReadAllText(Application.dataPath + "/Settings/strings_english.json");
+                //path = "/Strings/strings_english.json";
+                path = "Strings/strings_english";
                 break;
         }
+#if UNITY_EDITOR
+        //jsonString = File.ReadAllText(Application.dataPath + "/Resources" + path);
+        jsonString = Resources.Load(path).ToString();
+#else
+        jsonString = Resources.Load(path).ToString();
+#endif
         languageStrings = JsonMapper.ToObject(jsonString);
         titleIntroduction = languageStrings["titleIntroduction"].ToString();
         welcome = languageStrings["welcome"].ToString();
@@ -95,6 +118,14 @@ public class Settings : MonoBehaviour {
     public string GetPassword()
     {
         return password;
+    }
+
+    /*
+     * Fetches the module string that matches with the supplied module integer.
+     */
+    public string GetModule(int module)
+    {
+        return settings["modules"][module].ToString();
     }
 
     /*

@@ -36,10 +36,13 @@ public class RoomSelector : MonoBehaviour {
         rooms[1] = GameObject.Find(room2);
         rooms[2] = GameObject.Find(room3);
         rooms[3] = GameObject.Find(room4);
-        rooms[0].transform.Find("AnswerButtons").transform.Find("Answer 3").GetComponent<CompletionButtonActions>().SetRoom(0);
-        rooms[1].transform.Find("DoneButton").transform.Find("Button").GetComponent<CompletionButtonActions>().SetRoom(1);
-        rooms[2].transform.Find("DoneButton").transform.Find("Button").GetComponent<CompletionButtonActions>().SetRoom(2);
-        rooms[3].transform.Find("DoneButton").transform.Find("Button").GetComponent<CompletionButtonActions>().SetRoom(3);
+        for(int i = 0; i < 4; i++)
+        {
+            if(game.GetComponent<Settings>().GetModule(i).Equals("ModuleMedicalResearch"))
+                rooms[i].transform.Find("AnswerButtons").transform.Find("Answer 3").GetComponent<CompletionButtonActions>().SetRoom(i);
+            else
+                rooms[i].transform.Find("DoneButton").transform.Find("Button").GetComponent<CompletionButtonActions>().SetRoom(i);
+        }
         logo1 = Resources.Load<Texture>(logo1Texture);
         logo2 = Resources.Load<Texture>(logo2Texture);
         logo3 = Resources.Load<Texture>(logo3Texture);
@@ -152,6 +155,14 @@ public class RoomSelector : MonoBehaviour {
             if (childObject.tag == tagHideableRoom)
                 childObject.SetActive(false);
         }
+    }
+
+    /*
+     * Fetches the room indicator integer.
+     */
+    public int GetRoomIndicator()
+    {
+        return roomIndicator;
     }
 
 }
