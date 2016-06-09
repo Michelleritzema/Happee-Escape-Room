@@ -1,0 +1,238 @@
+body {
+	padding-top: 5px;
+	background-image: url("../img/background.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+a { 
+	color: black !important;
+	text-decoration: none; 
+}
+
+input[type=checkbox] {
+    display: none;
+}
+
+input[type=checkbox] + label {
+	display: inline-block;
+	color: white;
+	padding: 5px;
+	border-radius: 5px;
+	background: #333;
+}
+
+input[type=checkbox]:checked + label {
+    display: inline-block;
+    padding: 5px;
+	border-radius: 5px; 
+	background-color: rgba(131,181,46,0.9);
+}
+
+/* IDs */
+
+#init_logo {
+	width: 8%;
+	margin: 0px;
+}
+
+#title h1 {
+	font-size: 150%;
+	margin: 5px;
+	margin-bottom: 15px;
+}
+
+#info {
+	padding: 20px 150px;
+}
+	
+#plotly-div {
+	width: 100%;
+	border: 2px solid #000;
+	border-radius: 10px
+}
+
+#loader {
+	width: 5%;
+	padding: 10px 0px;
+}
+
+#download_zip {
+	padding-bottom: 20px;
+}
+
+/* General classes */
+
+.center_block {
+	display: block !important;
+    margin: auto !important;
+}
+
+.center_text {
+	text-align: center !important;
+}
+
+.hyperlink {
+	color: #3488AC !important;
+	text-decoration: underline !important;
+}
+
+.med_text {
+	font-size: 16px;
+}
+
+.underlined {
+	text-decoration: underline !important;
+}
+
+.green_line {
+	border-bottom: 2px solid rgba(131,181,46,0.9);
+}
+
+.input {
+	border: 1px solid grey;
+}
+
+.clear_float { 
+	display: block;
+	position: relative;
+	clear: both !important;
+} 
+
+/* Classes */
+
+.menu {
+	font-size: 150%;
+	font-weight: bold;
+    padding: 5px;
+	margin-bottom: 15px !important;
+	border: 2px solid #000;
+	border-radius: 5px; 
+	box-shadow: 5px 5px 15px 1px #666;
+	background-color: #3488AC;
+}
+
+.menu span ul, .center_block, .center_text {
+	list-style: none; 
+	padding: 0px;
+    margin: 0px auto;
+}
+
+.menu span ul li {
+	display: inline-block;
+	list-style-type: none;
+	margin: 0px;
+}
+
+.menu span ul li a, .center_block {
+    text-decoration: none;
+    padding: 10px;
+}
+
+.menu span ul li a:hover {
+    color: #fff !important;
+}
+
+.build_page {
+	width:100%;
+    display: inline-block;
+    padding: 20px;
+    vertical-align:top;
+	border: 2px solid black;
+	border-radius: 5px;
+	box-shadow: 5px 5px 15px 1px #666;
+	background:#EEE;
+}
+
+.build_page_title {
+	width: 100%;
+	margin-bottom: 30px;
+}
+
+.build_page_title span {
+	padding: 5px 30px;
+}
+
+.build_page_subtitle {
+	width: 100%;
+	padding-top: 20px;
+}
+
+.build_page_subtitle p {
+	font-size: 15px;
+	padding-top: 3px;
+	color: #757575;
+}
+
+.module_div {
+	padding: 15px;
+	padding-bottom: 5px;
+}
+
+.module_header {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.module_subheader {
+	font-size: 12px;
+	color: #757575;
+}
+
+.module_title {
+	padding: 5px;
+}
+
+.module_image {
+	max-width: 100%;
+	border: 1px solid black;
+}
+
+.json_form {
+	margin-top: 30px;
+}
+
+.json_form table {
+	display: block;
+    margin: auto;
+	width: 50%;
+}
+
+.json_form table tr td {
+	width: 100%;
+	padding: 5px;
+}
+
+.submit {
+	width: 100%;
+	text-align: center;
+	padding: 15px;
+	margin-bottom: 0px;
+}
+
+.submit input {
+	width: 200px;
+    height: 50px;
+	font-size: 20px;
+	color: black;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: #3488AC;
+}
+
+.img_escape_room {
+	width: 65%;
+	padding: 10px;
+	border: 1px solid #696969;
+	background: white;
+}
+
+.copyright {
+	margin: 20px auto;
+}
+
+.copyright_text {
+	font-weight: bold;
+	padding: 5px 10px;
+}

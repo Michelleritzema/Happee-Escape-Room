@@ -3,6 +3,7 @@ using System.Collections;
 using System.IO;
 using LitJson;
 using System.Collections.Generic;
+using System;
 
 /*
  * Created by Michelle Ritzema.
@@ -15,32 +16,54 @@ using System.Collections.Generic;
 
 public class Settings : MonoBehaviour {
     public Dictionary<string,string> postData;
-    private JsonData settings;
-    private string jsonString, teamName, password, module1, module2, module3, module4, 
+    private JsonData settings, languageStrings;
+    private string jsonString, language, teamName, password, module1, module2, module3, module4, 
         startTime, finishTime, module1Time, module2Time, module3Time, module4Time;
     private int totalMinutes;
 
     public string titleIntroduction, welcome, enterTeamName, emptyTeamNameWarning, next, go, notCompletedWarning;
     
     /*
-     * Initializes the class by reading the JSON file and storing the collected data.
+     * Initializes the class by reading the JSON files and storing the collected data.
      */
     public void Start() {
-        jsonString = File.ReadAllText(Application.dataPath + "/Settings/settings.json");
+        jsonString = File.ReadAllText(Application.dataPath + "/Settings/settings_test.json");
         settings = JsonMapper.ToObject(jsonString);
-        password = settings["Settings"][0]["password"].ToString();
-        totalMinutes = (int) settings["Settings"][0]["totalMinutes"];
-        module1 = settings["Settings"][0]["module1"].ToString();
-        module2 = settings["Settings"][0]["module2"].ToString();
-        module3 = settings["Settings"][0]["module3"].ToString();
-        module4 = settings["Settings"][0]["module4"].ToString();
-        titleIntroduction = settings["GameStrings"][0]["titleIntroduction"].ToString();
-        welcome = settings["GameStrings"][0]["welcome"].ToString();
-        enterTeamName = settings["GameStrings"][0]["enterTeamName"].ToString();
-        emptyTeamNameWarning = settings["GameStrings"][0]["emptyTeamNameWarning"].ToString();
-        next = settings["GameStrings"][0]["next"].ToString();
-        go = settings["GameStrings"][0]["go"].ToString();
-        notCompletedWarning = settings["GameStrings"][0]["notCompletedWarning"].ToString();
+        password = settings["password"].ToString();
+        totalMinutes = int.Parse(settings["totalMinutes"].ToString());
+        module1 = settings["modules"][0].ToString();
+        module2 = settings["modules"][1].ToString();
+        module3 = settings["modules"][2].ToString();
+        module4 = settings["modules"][3].ToString();
+        language = settings["language"].ToString();
+        loadStrings();
+    }
+
+    /*
+     * Loads strings in the correct language. This is determined in the settings json file.
+     */
+    private void loadStrings()
+    {
+        switch(language)
+        {
+            case "dutch":
+                jsonString = File.ReadAllText(Application.dataPath + "/Settings/strings_dutch.json");
+                break;
+            case "english":
+                jsonString = File.ReadAllText(Application.dataPath + "/Settings/strings_english.json");
+                break;
+            default:
+                jsonString = File.ReadAllText(Application.dataPath + "/Settings/strings_english.json");
+                break;
+        }
+        languageStrings = JsonMapper.ToObject(jsonString);
+        titleIntroduction = languageStrings["titleIntroduction"].ToString();
+        welcome = languageStrings["welcome"].ToString();
+        enterTeamName = languageStrings["enterTeamName"].ToString();
+        emptyTeamNameWarning = languageStrings["emptyTeamNameWarning"].ToString();
+        next = languageStrings["next"].ToString();
+        go = languageStrings["go"].ToString();
+        notCompletedWarning = languageStrings["notCompletedWarning"].ToString();
     }
 
     /*

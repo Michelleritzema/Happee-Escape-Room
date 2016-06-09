@@ -1,0 +1,7 @@
+{
+  "schoolName": "Reviuslyceum Maassluis",
+  "password": "techniek",
+  "totalMinutes": "10",
+  "language": "dutch",
+  "modules": [ "ModuleMedicalResearch", "ModuleTest2", "ModuleTest4", "ModuleTest5" ]
+}
