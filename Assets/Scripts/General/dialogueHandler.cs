@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class dialogueHandler : MonoBehaviour {
     public Text text;
-    public bool diaDone;
+    public bool diaDone= false;
 	// Use this for initialization
 	void Start () {
 	

@@ -13,7 +13,7 @@ public class PcButton : MonoBehaviour
     public GameObject button;
     public Material active, inactive, clicked;
     public Game game;
-    public bool laptopDone;
+    public bool laptopDone = false;
 
 
     /*

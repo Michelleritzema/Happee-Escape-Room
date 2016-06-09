@@ -9,12 +9,11 @@ public class WrongAnswerButton : MonoBehaviour {
     private int room;
     public bool laptopDone, diaDone;
 
- 
     /*
      * Changes the button's texture to clicked.
      * subtracts time from the remaining time.
      */
- 
+
     public void ClickOnObject()
     {
         GameObject pc = GameObject.Find("PcButton");

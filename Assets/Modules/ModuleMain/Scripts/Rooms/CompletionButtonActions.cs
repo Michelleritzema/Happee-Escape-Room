@@ -30,11 +30,15 @@ public class CompletionButtonActions : MonoBehaviour
 
     /*
      * Changes the button's texture to clicked.
-     * Sets the room status to completed and updates the unlocked password letters;
+     * Sets the room status to completed and updates the unlocked password letters.
+     * The medical button is only active when both parts are visited.
      */
     public void ClickOnObject()
     {
-        if (tagButton == tagMedical)
+        GameObject ab = GameObject.Find("AnswerButtons");
+        CompletionButtonActions answerbuttons = ab.transform.Find("Answer 3").GetComponent<CompletionButtonActions>();
+        
+        if (answerbuttons.clicked)
         {
             GameObject pc = GameObject.Find("PcButton");
             GameObject dh = GameObject.Find("DialogueButton");
