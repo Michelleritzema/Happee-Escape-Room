@@ -1,0 +1,9 @@
+{
+  "titleIntroduction": "Introduction",
+  "welcome": "Welcome to InIT, your virtual escape room!",
+  "enterTeamName": "Enter your team name:",
+  "emptyTeamNameWarning": "No team name filled in!",
+  "next": "Next",
+  "go": "Go!",
+  "notCompletedWarning":  "There are still some puzzles left to solve!"
+}
