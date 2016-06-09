@@ -2,18 +2,10 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class dialogueHandler : MonoBehaviour {
+public class DialogueHandler : MonoBehaviour {
     public Text text;
     public bool diaDone= false;
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
     public void UpdateText()
     {
         var dialoguePatient = GameObject.Find("DialoguePatient").GetComponent<Text>();
@@ -25,6 +17,6 @@ public class dialogueHandler : MonoBehaviour {
             t.text = "Dat is niet zo fijn waar heeft u last van?";
             diaDone = true;
         });
-        
     }
+
 }

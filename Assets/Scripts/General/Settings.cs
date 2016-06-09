@@ -7,11 +7,10 @@ using System;
 
 /*
  * Created by Michelle Ritzema.
+ * PostData dictionary created by Sander de Leng.
  * 
  * Class that contains all the settings that the server supplied when building the application.
  * These settings are stored and can be read with the getter methods.
- * 
- * Dictionary created by Sander de Leng.
  */
 
 public class Settings : MonoBehaviour {
@@ -177,6 +176,10 @@ public class Settings : MonoBehaviour {
     {
         this.module4Time = time;
     }
+
+    /*
+     * Creates a new dictionary with statistics to send to the server.
+     */
     public void dataValues()
     {
         postData = new Dictionary<string, string>();
@@ -187,4 +190,5 @@ public class Settings : MonoBehaviour {
         postData.Add("module 2 tijd", module2Time);
         postData.Add("module 3 tijd", module3Time);
     }
+
 }

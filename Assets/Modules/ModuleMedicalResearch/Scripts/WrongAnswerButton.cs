@@ -11,15 +11,14 @@ public class WrongAnswerButton : MonoBehaviour {
 
     /*
      * Changes the button's texture to clicked.
-     * subtracts time from the remaining time.
+     * Subtracts time from the remaining time.
      */
-
     public void ClickOnObject()
     {
         GameObject pc = GameObject.Find("PcButton");
         GameObject dh = GameObject.Find("DialogueButton");
         PcButton pcButton = pc.transform.Find("Button").GetComponent<PcButton>();
-        dialogueHandler dialogueHandler = dh.GetComponent<dialogueHandler>();
+        DialogueHandler dialogueHandler = dh.GetComponent<DialogueHandler>();
         laptopDone = pcButton.laptopDone;
         diaDone = dialogueHandler.diaDone;
         if (laptopDone == true && diaDone == true)
@@ -27,7 +26,6 @@ public class WrongAnswerButton : MonoBehaviour {
             game.GetComponent<Game>().SubtractTime();
             button.SetActive(false);
         }
-           
     }
 
 }

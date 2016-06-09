@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class textHandler : MonoBehaviour {
+public class TextHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -12,4 +12,5 @@ public class textHandler : MonoBehaviour {
 	void Update () {
 	
 	}
+
 }

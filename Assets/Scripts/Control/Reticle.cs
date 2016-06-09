@@ -158,7 +158,7 @@ public class Reticle : MonoBehaviour {
         else if(hitObject.tag == tagDialogeButton)
         {
             if (Input.GetKeyDown(KeyCode.E))
-                hitObject.GetComponent<dialogueHandler>().UpdateText();
+                hitObject.GetComponent<DialogueHandler>().UpdateText();
         }
         else if (hitObject.tag == tagAnsw)
         {

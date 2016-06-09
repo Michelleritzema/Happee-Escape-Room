@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 /*
@@ -10,15 +9,17 @@ using System.Collections.Generic;
 
 public class CompletionButtonActions : MonoBehaviour
 {
+
+    private string tagMedical = "antw4";
+
+    private Dictionary<string, string> dataPost;
+    private string tagButton;
+    private int room;
+
     public Game game;
     public GameObject button;
     public Material active, inactive, clicked;
     public bool laptopDone, diaDone;
-
-    private int room;
-    private Dictionary<string, string> dataPost;
-    private string tagButton;
-    private string tagMedical = "antw4";
 
     /*
      * Changes the button's texture to active.
@@ -37,13 +38,12 @@ public class CompletionButtonActions : MonoBehaviour
     {
         GameObject ab = GameObject.Find("AnswerButtons");
         CompletionButtonActions answerbuttons = ab.transform.Find("Answer 3").GetComponent<CompletionButtonActions>();
-        
         if (answerbuttons.clicked)
         {
             GameObject pc = GameObject.Find("PcButton");
             GameObject dh = GameObject.Find("DialogueButton");
             PcButton pcButton = pc.transform.Find("Button").GetComponent<PcButton>();
-            dialogueHandler dialogueHandler = dh.GetComponent<dialogueHandler>();
+            DialogueHandler dialogueHandler = dh.GetComponent<DialogueHandler>();
             laptopDone = pcButton.laptopDone;
             diaDone = dialogueHandler.diaDone;
             if (laptopDone == true && diaDone == true)
@@ -54,7 +54,8 @@ public class CompletionButtonActions : MonoBehaviour
                 game.GetComponent<Game>().UpdateAmountOfUnlockedLetters();
                 button.SetActive(false);
             }
-        } else
+        }
+        else
         {
             button.GetComponent<Renderer>().material = clicked;
             game.GetComponent<Game>().SetRoomStatus(room, true);
@@ -62,7 +63,6 @@ public class CompletionButtonActions : MonoBehaviour
             game.GetComponent<Game>().UpdateAmountOfUnlockedLetters();
             button.SetActive(false);
         }
-
     }
 
     /*

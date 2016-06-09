@@ -105,7 +105,6 @@ public class Game : MonoBehaviour {
         if(started)
         {
             currentTime = DateTime.Now;
-            
             if (!escaped)
                 timeLeft = endTime - currentTime - totalPenalty;
             else
@@ -124,7 +123,8 @@ public class Game : MonoBehaviour {
     private void DrawCountdownGUI(TimeSpan timeLeft)
     {
         GUI.color = Color.red;
-        string message = string.Format("{0:D2}", timeLeft.Hours) + ":" + string.Format("{0:D2}", timeLeft.Minutes) + ":" + string.Format("{0:D2}", timeLeft.Seconds);
+        string message = string.Format("{0:D2}", timeLeft.Hours) + ":" + string.Format("{0:D2}", timeLeft.Minutes) + 
+            ":" + string.Format("{0:D2}", timeLeft.Seconds);
         if (escaped)
             GUI.color = Color.green;
         else if (timeLeft.Ticks > 0 && timeLeft.Minutes > 0)
@@ -177,17 +177,15 @@ public class Game : MonoBehaviour {
     }
 
     /*
-     * Gives a penalty to the player when pressing the wrong answer button
+     * Subtracts penalty time from the timer when the user makes an error.
      */
-    public void  SubtractTime()
+    public void SubtractTime()
     { 
         totalPenalty = totalPenalty + penalty;
-  
     }
-     
 
     /*
-     * Activates the initial camera and deactivates the player camera.
+     * Activates the initial camera and deactivates the other cameras.
      */
     public void SwitchToInitialCamera()
     {
@@ -197,7 +195,7 @@ public class Game : MonoBehaviour {
     }
 
     /*
-     * Activates the player camera and deactivates the initial camera.
+     * Activates the player camera and deactivates the other cameras.
      */
     public void SwitchToPlayerCamera()
     {
@@ -206,12 +204,16 @@ public class Game : MonoBehaviour {
         PcCamera.gameObject.SetActive(false);
     }
 
+    /*
+     * Activates the laptop camera and deactivates the other cameras.
+     */
     public void SwitchToLaptopCamera()
     {
         PcCamera.gameObject.SetActive(true);
         playerCamera.gameObject.SetActive(false);
         initialCamera.gameObject.SetActive(false);
     }
+
     /*
      * Changes the supplied light's color, depending on the open boolean value.
      */
@@ -275,8 +277,9 @@ public class Game : MonoBehaviour {
     public void SetRoomTime(int room)
     {
         currentTime = DateTime.Now;
-        TimeSpan timeLeft = endTime - currentTime;
-        string message = string.Format("{0:D2}", timeLeft.Hours) + ":" + string.Format("{0:D2}", timeLeft.Minutes) + ":" + string.Format("{0:D2}", timeLeft.Seconds);
+        TimeSpan timeLeft = endTime - currentTime - totalPenalty;
+        string message = string.Format("{0:D2}", timeLeft.Hours) + ":" + string.Format("{0:D2}", timeLeft.Minutes) + 
+            ":" + string.Format("{0:D2}", timeLeft.Seconds);
         switch (room)
         {
             case 0:
@@ -303,8 +306,9 @@ public class Game : MonoBehaviour {
     public void Escaping()
     {
         escaped = true;
-        finishTime = endTime - currentTime;
-        string timeString = string.Format("{0:D2}", finishTime.Hours) + ":" + string.Format("{0:D2}", finishTime.Minutes) + ":" + string.Format("{0:D2}", finishTime.Seconds);
+        finishTime = endTime - currentTime - totalPenalty;
+        string timeString = string.Format("{0:D2}", finishTime.Hours) + ":" + string.Format("{0:D2}", finishTime.Minutes) + 
+            ":" + string.Format("{0:D2}", finishTime.Seconds);
         GetComponent<Settings>().SetFinishTime(timeString);
         ChangeLight(escapeDoorIndicatorLight, escapeDoorIndicatorGlass, true);
         escapeDoor.GetComponent<Door>().DoorMovable(true);

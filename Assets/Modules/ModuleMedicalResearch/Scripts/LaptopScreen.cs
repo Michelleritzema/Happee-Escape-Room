@@ -9,14 +9,15 @@ public class LaptopScreen : MonoBehaviour
     public Texture texture;
     public Rect windowRectangle;
     public Camera PcCamera;
+
     // Use this for initialization
     void Start()
     {
         windowRectangle = new Rect((Screen.width / 2) - 700, (Screen.height / 2) - 400, width, height);
-
     }
+
     /*
-     * creates the image of the laptop screen and handles the switching of the cameras
+     * Creates the image of the laptop screen and handles the switching of the cameras.
      */
     public void OnGUI()
     {
@@ -28,7 +29,6 @@ public class LaptopScreen : MonoBehaviour
                 game.GetComponent<Game>().SwitchToPlayerCamera();
             }
         }
-        
     }
 
 }

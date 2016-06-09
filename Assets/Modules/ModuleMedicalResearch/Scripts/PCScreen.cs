@@ -67,4 +67,5 @@ public class PCScreen : MonoBehaviour {
         GUI.Label(new Rect((Screen.width / 2) - 420, 200, width - 400, 200), enterTeamName, game.GetComponent<Game>().GetStyle(25, Game.GUIType.Label));
         GUI.Label(new Rect((Screen.width / 2) - 500, 80, width - 400, 200), welcome, game.GetComponent<Game>().GetStyle(25, Game.GUIType.Label));
     }
+
 }
