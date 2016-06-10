@@ -30,6 +30,7 @@ public class CompletionButtonActions : MonoBehaviour
     }
 
     /*
+     *  
      * Changes the button's texture to clicked.
      * Sets the room status to completed and updates the unlocked password letters.
      * The medical button is only active when both parts are visited.
@@ -40,25 +41,21 @@ public class CompletionButtonActions : MonoBehaviour
         string currentRoom = game.GetComponent<Settings>().GetModule(roomIndicator);
         if (currentRoom.Equals("ModuleMedicalResearch"))
         {
-            GameObject ab = GameObject.Find("AnswerButtons");
-            CompletionButtonActions answerbuttons = ab.transform.Find("Answer 3").GetComponent<CompletionButtonActions>();
-            if(answerbuttons.clicked)
+            GameObject pc = GameObject.Find("PcButton");
+            GameObject dh = GameObject.Find("DialogueButton");
+            PcButton pcButton = pc.transform.Find("Button").GetComponent<PcButton>();
+            DialogueHandler dialogueHandler = dh.GetComponent<DialogueHandler>();
+            laptopDone = pcButton.laptopDone;
+            diaDone = dialogueHandler.diaDone;
+            if (laptopDone == true && diaDone == true)
             {
-                GameObject pc = GameObject.Find("PcButton");
-                GameObject dh = GameObject.Find("DialogueButton");
-                PcButton pcButton = pc.transform.Find("Button").GetComponent<PcButton>();
-                DialogueHandler dialogueHandler = dh.GetComponent<DialogueHandler>();
-                laptopDone = pcButton.laptopDone;
-                diaDone = dialogueHandler.diaDone;
-                if (laptopDone == true && diaDone == true)
-                {
-                    button.GetComponent<Renderer>().material = clicked;
-                    game.GetComponent<Game>().SetRoomStatus(room, true);
-                    game.GetComponent<Game>().SetRoomTime(room);
-                    game.GetComponent<Game>().UpdateAmountOfUnlockedLetters();
-                    button.SetActive(false);
-                }
+                button.GetComponent<Renderer>().material = clicked;
+                game.GetComponent<Game>().SetRoomStatus(room, true);
+                game.GetComponent<Game>().SetRoomTime(room);
+                game.GetComponent<Game>().UpdateAmountOfUnlockedLetters();
+                button.SetActive(false);
             }
+
         }
         else
         {

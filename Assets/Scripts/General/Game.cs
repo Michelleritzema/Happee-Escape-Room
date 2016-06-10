@@ -326,6 +326,7 @@ public class Game : MonoBehaviour {
         roomSelector.GetComponent<RoomSelector>().HideAllRooms();
         escapeDoor.DoorMovable(false);
         puzzleDoor.DoorMovable(false);
+        GetComponent<SendData>().POST("http://145.24.222.121/dbReceive.php");
     }
 
     /*
