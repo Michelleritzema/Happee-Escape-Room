@@ -1,3 +1,5 @@
+<!-- Created by Michelle Ritzema -->
+
 <?php
 	$image_path = 'img/modules/';
 	$handle = opendir(dirname(realpath(__FILE__)).'/'.$image_path);

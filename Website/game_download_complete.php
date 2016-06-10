@@ -1,25 +1,31 @@
+<!-- Created by Michelle Ritzema -->
+
 <?php
 	ini_set('max_execution_time', 600);
 	ini_set('memory_limit','1024M');
 
+	$GLOBALS['location_settings'] = "download/settings.json";
+	$GLOBALS['location_game'] = "C:/Users/0881495/Desktop/HPLab_Project/Modules/Init.exe";
+	$GLOBALS['location_game_data'] = "C:/Users/0881495/Desktop/HPLab_Project/Modules/Init_Data";
+	$GLOBALS['location_player_win1'] = "C:/Users/0881495/Desktop/HPLab_Project/Modules/player_win_x86.pdb";
+	$GLOBALS['location_player_win2'] = "C:/Users/0881495/Desktop/HPLab_Project/Modules/player_win_x86_s.pdb";
+	
 	//Original from: https://davidwalsh.name/create-zip-php
 	/*
 		Creates a zip file containing the game exe file, settings json file, 
 		Init_Data directory and a README text file.
 	*/
 	function createZip($destination = '', $overwrite = true) {
-		$location_settings = "download/settings.json";
-		$location_game = "C:/Users/0881495/Desktop/HPLab_Project/Modules/Init.exe";
-		$location_game_data = "C:/Users/0881495/Desktop/HPLab_Project/Modules/Init_Data";
 		if(file_exists($destination) && !$overwrite)
 			return false;
 		$zip = new ZipArchive();
 		if($zip->open($destination,$overwrite ? ZIPARCHIVE::OVERWRITE : ZIPARCHIVE::CREATE) !== true)
 			return false;
-		addToZip($zip, $location_settings, "settings.json");
-		addToZip($zip, $location_game, "Init.exe");
-		//$zip->addEmptyDir("Init_Data");
-		addFolderToZip($location_game_data, $zip, 1);
+		addToZip($zip, $GLOBALS['location_settings'], "settings.json");
+		addToZip($zip, $GLOBALS['location_game'], "Init.exe");
+		addToZip($zip, $GLOBALS['location_player_win1'], "player_win_x86.pdb");
+		addToZip($zip, $GLOBALS['location_player_win2'], "player_win_x86_s.pdb");
+		addFolderToZip($GLOBALS['location_game_data'], $zip, 1);
 		$zip->close();
 		return file_exists($destination);
 	}
@@ -52,11 +58,18 @@
 				}
 				++$index;
 			}
-			if(count($folders) > 0) {
-				$new_layer = ++$layer;
-				foreach($folders as $directory)
-					addFolderToZip($directory, $zip, $new_layer);
-			}
+			goIntoFolders($zip, $folders, $layer);
+		}
+	}
+	
+	/*
+		Iterates over the folders array and adds the folder to the zip file.
+	*/
+	function goIntoFolders($zip, $folders, $layer) {
+		if(count($folders) > 0) {
+			$new_layer = ++$layer;
+			foreach($folders as $directory)
+				addFolderToZip($directory, $zip, $new_layer);
 		}
 	}
 	

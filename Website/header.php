@@ -1,3 +1,5 @@
+<!-- Created by Michelle Ritzema & Sander de Leng -->
+
 <div id="title">
 	<a href="index.php">
 		<img id="init_logo" class="center_block" src="img/logo_transparent.png" />

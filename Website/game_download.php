@@ -1,3 +1,5 @@
+<!-- Created by Michelle Ritzema -->
+
 <?php
 	if(isset($_GET["json"])) {
 		$json = $_GET["json"];

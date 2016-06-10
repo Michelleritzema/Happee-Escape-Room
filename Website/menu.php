@@ -1,3 +1,5 @@
+<!-- Created by Michelle Ritzema & Sander de Leng -->
+
 <div id="nav" class="header clearfix menu center_block center_text">
 	<span>
 		<ul>
