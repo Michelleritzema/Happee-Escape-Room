@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 /*
  * Created by Michelle Ritzema.
@@ -93,16 +92,24 @@ public class LetterChanger : MonoBehaviour {
             if (addition)
             {
                 if (currentInteger.Equals(26))
+                {
                     currentInteger = 1;
+                }
                 else
+                {
                     currentInteger++;
+                }
             }
             else
             {
                 if (currentInteger.Equals(1))
+                {
                     currentInteger = 26;
+                }
                 else
+                {
                     currentInteger--;
+                }  
             }
         }
     }

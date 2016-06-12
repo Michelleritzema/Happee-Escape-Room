@@ -13,18 +13,38 @@ using System.Reflection;
  */
 
 public class Settings : MonoBehaviour {
-    public Dictionary<string,string> postData;
+
     private JsonData settings, languageStrings;
-    private string jsonString, language, teamName, password, module1, module2, module3, module4, 
+    private string jsonString, language, teamName, password, module1, module2, module3, module4,
         startTime, finishTime, module1Time, module2Time, module3Time, module4Time;
     private int totalMinutes;
 
+    public Dictionary<string, string> postData;
     public string titleIntroduction, welcome, enterTeamName, emptyTeamNameWarning, next, go, notCompletedWarning;
-    
+
     /*
      * Initializes the class by reading the JSON files and storing the collected data.
      */
-    public void Start() {
+    public void Start()
+    {
+        GetSettingsJsonString();
+        settings = JsonMapper.ToObject(jsonString);
+        password = settings["password"].ToString();
+        totalMinutes = int.Parse(settings["totalMinutes"].ToString());
+        module1 = settings["modules"][0].ToString();
+        module2 = settings["modules"][1].ToString();
+        module3 = settings["modules"][2].ToString();
+        module4 = settings["modules"][3].ToString();
+        language = settings["language"].ToString();
+        LoadStrings();
+    }
+
+    /*
+     * Reads the JSON settings file and returns a string containing the JSON.
+     * If it is run in the Unity editor, the test data set is used.
+     */
+    private void GetSettingsJsonString()
+    {
 #if UNITY_EDITOR
         jsonString = File.ReadAllText(Application.dataPath + "/Settings/settings_test.json");
 #else
@@ -36,48 +56,43 @@ public class Settings : MonoBehaviour {
         {
 	        jsonText = settingsReader.ReadLine();
 	        if (jsonText != null)
+            {
 		        jsonString = jsonString + jsonText;
+            }
         }
         settingsReader.Close();
 #endif
-        settings = JsonMapper.ToObject(jsonString);
-        password = settings["password"].ToString();
-        totalMinutes = int.Parse(settings["totalMinutes"].ToString());
-        module1 = settings["modules"][0].ToString();
-        module2 = settings["modules"][1].ToString();
-        module3 = settings["modules"][2].ToString();
-        module4 = settings["modules"][3].ToString();
-        language = settings["language"].ToString();
-        loadStrings();
     }
 
     /*
-     * Loads strings in the correct language. This is determined in the settings json file.
+     * Determines which path to use to fetch the correct language file.
      */
-    private void loadStrings()
+    private string DetermineLanguageFile()
     {
         string path;
         switch (language)
         {
             case "dutch":
-                //path = "/Strings/strings_dutch.json";
                 path = "Strings/strings_dutch";
                 break;
             case "english":
-                //path = "/Strings/strings_english.json";
                 path = "Strings/strings_english";
                 break;
             default:
-                //path = "/Strings/strings_english.json";
                 path = "Strings/strings_english";
                 break;
         }
-#if UNITY_EDITOR
-        //jsonString = File.ReadAllText(Application.dataPath + "/Resources" + path);
+        return path;
+    }
+
+    /*
+     * Loads strings in the correct language.
+     * Which language is determined in the settings json file.
+     */
+    private void LoadStrings()
+    {
+        string path = DetermineLanguageFile();
         jsonString = Resources.Load(path).ToString();
-#else
-        jsonString = Resources.Load(path).ToString();
-#endif
         languageStrings = JsonMapper.ToObject(jsonString);
         titleIntroduction = languageStrings["titleIntroduction"].ToString();
         welcome = languageStrings["welcome"].ToString();
@@ -86,6 +101,20 @@ public class Settings : MonoBehaviour {
         next = languageStrings["next"].ToString();
         go = languageStrings["go"].ToString();
         notCompletedWarning = languageStrings["notCompletedWarning"].ToString();
+    }
+
+    /*
+     * Creates a new dictionary with statistics to send to the server.
+     */
+    public void DataValues()
+    {
+        postData = new Dictionary<string, string>();
+        postData.Add("tijd over", finishTime);
+        postData.Add("Team naam", teamName);
+        postData.Add("Totale minuten", totalMinutes.ToString());
+        postData.Add("module 1 tijd", module1Time);
+        postData.Add("module 2 tijd", module2Time);
+        postData.Add("module 3 tijd", module3Time);
     }
 
     /*
@@ -181,7 +210,7 @@ public class Settings : MonoBehaviour {
      */
     public void SetModule1Time(string time)
     {
-        this.module1Time = time;
+        module1Time = time;
     }
 
     /*
@@ -189,7 +218,7 @@ public class Settings : MonoBehaviour {
      */
     public void SetModule2Time(string time)
     {
-        this.module2Time = time;
+        module2Time = time;
     }
 
     /*
@@ -197,7 +226,7 @@ public class Settings : MonoBehaviour {
      */
     public void SetModule3Time(string time)
     {
-        this.module3Time = time;
+        module3Time = time;
     }
 
     /*
@@ -205,21 +234,43 @@ public class Settings : MonoBehaviour {
      */
     public void SetModule4Time(string time)
     {
-        this.module4Time = time;
+        module4Time = time;
+    }
+
+    public string GetFinishTime()
+    {
+        return finishTime;
     }
 
     /*
-     * Creates a new dictionary with statistics to send to the server.
+     * gets the module 1 finish time string.
      */
-    public void dataValues()
+    public string GetModule1Time()
     {
-        postData = new Dictionary<string, string>();
-        postData.Add("tijd over", finishTime);
-        postData.Add("Team naam", teamName);
-        postData.Add("Totale minuten", totalMinutes.ToString());
-        postData.Add("module 1 tijd", module1Time);
-        postData.Add("module 2 tijd", module2Time);
-        postData.Add("module 3 tijd", module3Time);
+        return module1Time;
     }
 
+    /*
+     * Stores the module 2 finish time string.
+     */
+    public string GetModule2Time()
+    {
+        return module2Time;
+    }
+
+    /*
+     * Stores the module 3 finish time string.
+     */
+    public string GetModule3Time()
+    {
+        return module3Time;
+    }
+
+    /*
+     * Stores the module 4 finish time string.
+     */
+    public string GetModule4Time()
+    {
+        return module4Time;
+    }
 }

@@ -16,7 +16,7 @@ public class RoomSelector : MonoBehaviour {
 
     public Game game;
     public GameObject displayScreen, lightbulb;
-    public Light light;
+    public new Light light;
     public Door puzzleDoor;
 
 	/*
@@ -24,29 +24,11 @@ public class RoomSelector : MonoBehaviour {
      * Also fetches all the room logo textures to use on the display.
      */
 	public void Start () {
-        string room1 = game.GetComponent<Settings>().GetModule1();
-        string room2 = game.GetComponent<Settings>().GetModule2();
-        string room3 = game.GetComponent<Settings>().GetModule3();
-        string room4 = game.GetComponent<Settings>().GetModule4();
-        string logo1Texture = "Logos/" + room1;
-        string logo2Texture = "Logos/" + room2;
-        string logo3Texture = "Logos/" + room3;
-        string logo4Texture = "Logos/" + room4;
-        rooms[0] = GameObject.Find(room1);
-        rooms[1] = GameObject.Find(room2);
-        rooms[2] = GameObject.Find(room3);
-        rooms[3] = GameObject.Find(room4);
-        for(int i = 0; i < 4; i++)
-        {
-            if(game.GetComponent<Settings>().GetModule(i).Equals("ModuleMedicalResearch"))
-                rooms[i].transform.Find("AnswerButtons").transform.Find("Answer 3").GetComponent<CompletionButtonActions>().SetRoom(i);
-            else
-                rooms[i].transform.Find("DoneButton").transform.Find("Button").GetComponent<CompletionButtonActions>().SetRoom(i);
-        }
-        logo1 = Resources.Load<Texture>(logo1Texture);
-        logo2 = Resources.Load<Texture>(logo2Texture);
-        logo3 = Resources.Load<Texture>(logo3Texture);
-        logo4 = Resources.Load<Texture>(logo4Texture);
+        InitializeRoom1();
+        InitializeRoom2();
+        InitializeRoom3();
+        InitializeRoom4();
+        InitializeRoomFinishers();
         MakeRoomActive(roomIndicator);
     }
 
@@ -56,6 +38,68 @@ public class RoomSelector : MonoBehaviour {
     public void Update()
     {
         game.GetComponent<Game>().SetRoomIndicatorLight(light, lightbulb, roomIndicator);
+    }
+
+    /*
+     * Initializes room 1.
+     */
+    private void InitializeRoom1()
+    {
+        string room1 = game.GetComponent<Settings>().GetModule1();
+        rooms[0] = GameObject.Find(room1);
+        string logo1Texture = "Logos/" + room1;
+        logo1 = Resources.Load<Texture>(logo1Texture);
+    }
+
+    /*
+     * Initializes room 2.
+     */
+    private void InitializeRoom2()
+    {
+        string room2 = game.GetComponent<Settings>().GetModule2();
+        rooms[1] = GameObject.Find(room2);
+        string logo2Texture = "Logos/" + room2;
+        logo2 = Resources.Load<Texture>(logo2Texture);
+    }
+
+    /*
+     * Initializes room 3.
+     */
+    private void InitializeRoom3()
+    {
+        string room3 = game.GetComponent<Settings>().GetModule3();
+        rooms[2] = GameObject.Find(room3);
+        string logo3Texture = "Logos/" + room3;
+        logo3 = Resources.Load<Texture>(logo3Texture);
+    }
+
+    /*
+     * Initializes room 4.
+     */
+    private void InitializeRoom4()
+    {
+        string room4 = game.GetComponent<Settings>().GetModule4();
+        rooms[3] = GameObject.Find(room4);
+        string logo4Texture = "Logos/" + room4;
+        logo4 = Resources.Load<Texture>(logo4Texture);
+    }
+
+    /*
+     * Initializes the room finishers.
+     */
+    private void InitializeRoomFinishers()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (game.GetComponent<Settings>().GetModule(i).Equals("ModuleMedicalResearch"))
+            {
+                rooms[i].transform.Find("AnswerButtons").transform.Find("Answer 3").GetComponent<CompletionButtonActions>().SetRoom(i);
+            }
+            else
+            {
+                rooms[i].transform.Find("DoneButton").transform.Find("Button").GetComponent<CompletionButtonActions>().SetRoom(i);
+            }
+        }
     }
 
     /*
@@ -89,7 +133,9 @@ public class RoomSelector : MonoBehaviour {
     public void ChangeRooms(bool up)
     {
         if(!puzzleDoor.GetComponent<Door>().GetRunning())
+        {
             StartCoroutine(CheckDoorClosed(up));
+        }  
     }
 
     /*
@@ -104,8 +150,13 @@ public class RoomSelector : MonoBehaviour {
         while (puzzleDoor.GetComponent<Door>().GetRunning())
             yield return new WaitForSeconds(2);
         if (up)
+        {
             MoveRoomUp();
-        else MoveRoomDown();
+        }
+        else
+        {
+            MoveRoomDown();
+        }
         game.GetComponent<Game>().LockDoor(puzzleDoor, false);
     }
 
@@ -115,9 +166,13 @@ public class RoomSelector : MonoBehaviour {
     public void MoveRoomUp()
     {
         if (roomIndicator == 3)
+        {
             roomIndicator = 0;
+        }
         else
+        {
             roomIndicator++;
+        }
         MakeRoomActive(roomIndicator);
     }
 
@@ -127,9 +182,13 @@ public class RoomSelector : MonoBehaviour {
     public void MoveRoomDown()
     {
         if (roomIndicator == 0)
+        {
             roomIndicator = 3;
+        } 
         else
+        {
             roomIndicator--;
+        }
         MakeRoomActive(roomIndicator);
     }
 
@@ -153,7 +212,9 @@ public class RoomSelector : MonoBehaviour {
         {
             GameObject childObject = child.gameObject;
             if (childObject.tag == tagHideableRoom)
+            {
                 childObject.SetActive(false);
+            } 
         }
     }
 

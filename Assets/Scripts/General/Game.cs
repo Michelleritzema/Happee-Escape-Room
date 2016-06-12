@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using System.Text;
 
 /*
@@ -19,17 +16,16 @@ public class Game : MonoBehaviour {
     private int totalMinutes = 60;
 
     private DateTime startTime, endTime, currentTime;
-    private TimeSpan finishTime;
+    private TimeSpan finishTime, timeLeft;
     private string go, password, scrambledPassword;
     private bool started, completed, escaped;
     private double unlockAmount, unlockedLettersAmount;
-    private TimeSpan timeLeft;
-    public TimeSpan penalty = TimeSpan.FromSeconds(30), totalPenalty;
 
-    public GameObject roomSelector, escapeDoorIndicatorGlass;
+    public GameObject roomSelector, escapeDoorIndicatorGlass, DataSender;
     public Camera initialCamera, playerCamera, PcCamera;
     public Light escapeDoorIndicatorLight;
     public Door escapeDoor, puzzleDoor;
+    public TimeSpan penalty = TimeSpan.FromSeconds(30), totalPenalty;
 
     /*
      * Initializes the game by setting all the necessary values.
@@ -52,16 +48,38 @@ public class Game : MonoBehaviour {
     }
 
     /*
-     * Hides the cursor during the game and updates the completed boolean.
+     * Executes the specified methods on every frame update.
      */
     public void Update()
     {
+        CursorStatus();
+        IsGameCompleted();
+    }
+
+    /*
+     * Hides or shows the cursor during the game, determined by certain conditions.
+     */
+    private void CursorStatus()
+    {
         if (started && playerCamera.gameObject.activeSelf == true)
+        {
             Cursor.visible = false;
+        }
         else
+        {
             Cursor.visible = true;
+        }
+    }
+
+    /*
+     * Sets the completed boolean to true if all rooms have been completed.
+     */
+    private void IsGameCompleted()
+    {
         if (roomsStatus[0] && roomsStatus[1] && roomsStatus[2] && roomsStatus[3])
+        {
             completed = true;
+        }
     }
 
     /*
@@ -106,11 +124,17 @@ public class Game : MonoBehaviour {
         {
             currentTime = DateTime.Now;
             if (!escaped)
+            {
                 timeLeft = endTime - currentTime - totalPenalty;
+            }
             else
+            {
                 timeLeft = finishTime - totalPenalty;
+            }
             if((currentTime - startTime).Seconds < 5 && currentTime.Minute.Equals(startTime.Minute))
+            {
                 GUI.Label(new Rect((Screen.width / 2) - 80, (Screen.height / 2) - 100, 200, 100), go, GetStyle(80, GUIType.Label));
+            }
             DrawCountdownGUI(timeLeft);
             DrawPasswordGUI();
         }
@@ -126,9 +150,13 @@ public class Game : MonoBehaviour {
         string message = string.Format("{0:D2}", timeLeft.Hours) + ":" + string.Format("{0:D2}", timeLeft.Minutes) + 
             ":" + string.Format("{0:D2}", timeLeft.Seconds);
         if (escaped)
+        {
             GUI.color = Color.green;
+        }
         else if (timeLeft.Ticks > 0 && timeLeft.Minutes > 0)
+        {
             GUI.color = Color.white;
+        }
         else if (timeLeft.Ticks <= 0)
         {
             GUI.color = Color.red;
@@ -139,17 +167,21 @@ public class Game : MonoBehaviour {
 
     /*
      * Draws the amount of unlocked password letters on the screen. The display string is created by
-     * checking the amount of unlocked letters. The rest if filled with underscores.
+     * checking the amount of unlocked letters. The rest is filled with underscores.
      */
     private void DrawPasswordGUI()
     {
         string message = "Password letters:\n";
         int unlockedLetters = (int)Math.Floor(unlockedLettersAmount);
         for(int i = 0; i < unlockedLetters; i++)
+        {
             message = message + scrambledPassword[i] + " ";
+        }
         int amountLeft = scrambledPassword.Length - unlockedLetters;
         for(int i = 0; i < amountLeft; i++)
+        {
             message = message + "_ ";
+        }
         GUI.color = Color.white;
         GUI.Box(new Rect(Screen.width - 260, 10, 400, 120), message, GetStyle(30, GUIType.Label));
     }
@@ -161,9 +193,13 @@ public class Game : MonoBehaviour {
     {
         double newAmount = unlockedLettersAmount + unlockAmount;
         if (newAmount > scrambledPassword.Length)
+        {
             unlockedLettersAmount = scrambledPassword.Length;
+        }
         else
+        {
             unlockedLettersAmount = unlockedLettersAmount + unlockAmount;
+        }
     }
 
     /*
@@ -236,38 +272,13 @@ public class Game : MonoBehaviour {
      */
     public void SetRoomIndicatorLight(Light light, GameObject lamp, int roomIndicator)
     {
-        switch(roomIndicator)
+        if (roomsStatus[roomIndicator])
         {
-            case 0:
-                if (roomsStatus[0])
-                    ChangeLight(light, lamp, true);
-                else
-                    ChangeLight(light, lamp, false);
-                break;
-            case 1:
-                if (roomsStatus[1])
-                    ChangeLight(light, lamp, true);
-                else
-                    ChangeLight(light, lamp, false);
-                break;
-            case 2:
-                if (roomsStatus[2])
-                    ChangeLight(light, lamp, true);
-                else
-                    ChangeLight(light, lamp, false);
-                break;
-            case 3:
-                if (roomsStatus[3])
-                    ChangeLight(light, lamp, true);
-                else
-                    ChangeLight(light, lamp, false);
-                break;
-            default:
-                if (roomsStatus[0])
-                    ChangeLight(light, lamp, true);
-                else
-                    ChangeLight(light, lamp, false);
-                break;
+            ChangeLight(light, lamp, true);
+        }
+        else
+        {
+            ChangeLight(light, lamp, false);
         }
     }
 
@@ -326,6 +337,7 @@ public class Game : MonoBehaviour {
         roomSelector.GetComponent<RoomSelector>().HideAllRooms();
         escapeDoor.DoorMovable(false);
         puzzleDoor.DoorMovable(false);
+        DataSender.GetComponent<SendData>().POST();
     }
 
     /*
@@ -335,7 +347,9 @@ public class Game : MonoBehaviour {
     public void TriggerDoorAnimation(Door door)
     {
         if (door.GetRunning() == false)
+        {
             StartCoroutine(door.Open());
+        }
     }
 
     /*
@@ -344,7 +358,9 @@ public class Game : MonoBehaviour {
     public void CloseDoor(Door door)
     {
         if (door.GetComponent<Door>().GetOpened())
+        {
             TriggerDoorAnimation(door);
+        }
     }
 
     /*
@@ -353,9 +369,13 @@ public class Game : MonoBehaviour {
     public void LockDoor(Door door, bool lockDoor)
     {
         if (lockDoor)
+        {
             door.GetComponent<Door>().DoorMovable(false);
+        }
         else
+        {
             door.GetComponent<Door>().DoorMovable(true);
+        }
     }
 
     /*

@@ -29,7 +29,9 @@ public class MouseLook : MonoBehaviour
 	{
 		targetDirection = transform.localRotation.eulerAngles;
 		if (characterBody)
+        {
             targetCharacterDirection = characterBody.transform.localRotation.eulerAngles;
+        }
 	}
 	
     /*
@@ -47,11 +49,15 @@ public class MouseLook : MonoBehaviour
 		smoothMouse.y = Mathf.Lerp(smoothMouse.y, mouseDelta.y, 1f / smoothing.y);
 		mouseAbsolute += smoothMouse;
 		if (clampInDegrees.x < 360)
-			mouseAbsolute.x = Mathf.Clamp(mouseAbsolute.x, -clampInDegrees.x * 0.5f, clampInDegrees.x * 0.5f);
+        {
+            mouseAbsolute.x = Mathf.Clamp(mouseAbsolute.x, -clampInDegrees.x * 0.5f, clampInDegrees.x * 0.5f);
+        }
 		var xRotation = Quaternion.AngleAxis(-mouseAbsolute.y, targetOrientation * Vector3.right);
 		transform.localRotation = xRotation;
 		if (clampInDegrees.y < 360)
-			mouseAbsolute.y = Mathf.Clamp(mouseAbsolute.y, -clampInDegrees.y * 0.5f, clampInDegrees.y * 0.5f);
+        {
+            mouseAbsolute.y = Mathf.Clamp(mouseAbsolute.y, -clampInDegrees.y * 0.5f, clampInDegrees.y * 0.5f);
+        }
 		transform.localRotation *= targetOrientation;
 		if (characterBody)
 		{

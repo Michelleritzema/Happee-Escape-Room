@@ -87,9 +87,13 @@ public class PasswordTerminal : MonoBehaviour {
         {
             GameObject letter = letterPanelPositions[i];
             if (i < password.Length)
+            {
                 letter.GetComponent<LetterChanger>().InitializePanel(1);
+            }
             else
+            {
                 letter.GetComponent<LetterChanger>().InitializePanel(0);
+            }  
         }
     }
 	
@@ -106,7 +110,9 @@ public class PasswordTerminal : MonoBehaviour {
             letterPanel = letterPanelPositions[i];
             int letterIndicator = letterPanel.GetComponent<LetterChanger>().GetCurrentLetter();
             if (!letterIndicator.Equals(0))
+            {
                 passwordAttempt = GetPassword(passwordAttempt, GetLetter(letterIndicator));
+            }
         }
         return passwordAttempt;
     }
@@ -118,12 +124,16 @@ public class PasswordTerminal : MonoBehaviour {
      */
     public void CheckPassword () {
         if(!game.GetComponent<Game>().GetCompleted())
+        {
             displayNotCompletedWarning = 200;
+        }
         else
         {
             string passwordAttempt = FetchSubmittedPassword();
             if (passwordAttempt.Equals(password))
+            {
                 game.GetComponent<Game>().Escaping();
+            }
         }
 	}
 
