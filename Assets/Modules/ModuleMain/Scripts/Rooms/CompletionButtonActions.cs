@@ -10,8 +10,6 @@ using System.Collections.Generic;
 public class CompletionButtonActions : MonoBehaviour
 {
 
-    private string tagMedical = "antw4";
-
     private Dictionary<string, string> dataPost;
     private string tagButton;
     private int room;
@@ -30,7 +28,6 @@ public class CompletionButtonActions : MonoBehaviour
     }
 
     /*
-     *  
      * Changes the button's texture to clicked.
      * Sets the room status to completed and updates the unlocked password letters.
      * The medical button is only active when both parts are visited.

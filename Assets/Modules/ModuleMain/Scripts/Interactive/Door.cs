@@ -125,9 +125,13 @@ public class Door : MonoBehaviour {
     public void DoorMovable(bool movable)
     {
         if (movable)
+        {
             moveAmount = 0;
+        }
         else
+        {
             moveAmount = -1;
+        }
     }
 
 	/*
@@ -140,7 +144,9 @@ public class Door : MonoBehaviour {
 		if (moveIterator < moveAmount || moveAmount == 0)
 		{
             if (hinge.transform.rotation == (state == 0 ? endRotation : startRotation))
+            {
                 state ^= 1;
+            }
             Quaternion finalRotation = ((state == 0) ? endRotation : startRotation);
     	while (Mathf.Abs(Quaternion.Angle(finalRotation, hinge.transform.rotation)) > 0.01f)
     	{
@@ -149,15 +155,32 @@ public class Door : MonoBehaviour {
       		yield return new WaitForEndOfFrame();
     	}
             running = false;
-            if (opened)
-                opened = false;
-            else
-                opened = true;
+            SetOpened();
             if (moveAmount == 0)
+            {
                 moveIterator = 0;
-			else moveIterator++;
+            }
+            else
+            {
+                moveIterator++;
+            }
 		}
 	}
+
+    /*
+     * Sets the opened value to true if it is false, and vice versa.
+     */
+    private void SetOpened()
+    {
+        if (opened)
+        {
+            opened = false;
+        }
+        else
+        {
+            opened = true;
+        }
+    }
 
 	/*
      * Displays an indication to the user that the door can be interacted with.
@@ -172,9 +195,15 @@ public class Door : MonoBehaviour {
             if (reticle.GetVisibleDoor() != null)
             {
                 if (reticle.GetVisibleDoor().GetMoveAmount() == -1)
-                    GUI.Box(new Rect(40, 40, 300, 60), "Deze deur is vergrendeld", game.GetComponent<Game>().GetStandardBoxStyle(20));
+                {
+                    GUI.Box(new Rect(40, 40, 300, 60), "Deze deur is vergrendeld", 
+                        game.GetComponent<Game>().GetStandardBoxStyle(20));
+                }
                 else
-                    GUI.Box(new Rect(40, 40, 400, 60), "Druk op 'E' om de deur te openen/sluiten", game.GetComponent<Game>().GetStandardBoxStyle(20));
+                {
+                    GUI.Box(new Rect(40, 40, 400, 60), "Druk op 'E' om de deur te openen/sluiten", 
+                        game.GetComponent<Game>().GetStandardBoxStyle(20));
+                }  
             }
 		}
 	}

@@ -1,19 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using System;
-
 
 /*
  * Created by Sander de Leng
  * 
  * Creates the post request to send the game information to the server. 
- * Uses the unityWebRequest service WWW to send information the server.
+ * Uses the UnityWebRequest service WWW to send information the server.
  * Gets the required data through the dictionary postData located in the settings script, 
  * in here the total time, the time for each module and the team name is stored.
  */
 
 public class SendData : MonoBehaviour {
+
     private string teamName, finishTime, module1Time, module2Time, module3Time, module4Time;
 
     /*
@@ -64,7 +62,7 @@ public class SendData : MonoBehaviour {
      */
     public void SetModule1Time(string time)
     {
-        this.module1Time = time;
+        module1Time = time;
     }
 
     /*
@@ -72,7 +70,7 @@ public class SendData : MonoBehaviour {
      */
     public void SetModule2Time(string time)
     {
-        this.module2Time = time;
+        module2Time = time;
     }
 
     /*
@@ -80,7 +78,7 @@ public class SendData : MonoBehaviour {
      */
     public void SetModule3Time(string time)
     {
-        this.module3Time = time;
+        module3Time = time;
     }
 
     /*
@@ -88,7 +86,7 @@ public class SendData : MonoBehaviour {
      */
     public void SetModule4Time(string time)
     {
-        this.module4Time = time;
+        module4Time = time;
     }
 
 }

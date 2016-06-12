@@ -1,22 +1,24 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using NUnit.Framework;
 
-public class SimpleTest {
+/*
+ * Created by Michelle Ritzema.
+ * 
+ * Test to create and rename a new GameObject.
+ */
+public class RenameTest {
 
     [Test]
     public void EditorTest()
     {
-        //Arrange
         var gameObject = new GameObject();
 
         //Act
-        //Try to rename the GameObject
         var newGameObjectName = "My game object";
         gameObject.name = newGameObjectName;
 
         //Assert
-        //The object has a new name
         Assert.AreEqual(newGameObjectName, gameObject.name);
     }
+
 }

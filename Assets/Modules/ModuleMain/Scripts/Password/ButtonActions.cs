@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 /*
  * Created by Michelle Ritzema.
@@ -12,8 +11,7 @@ public class ButtonActions : MonoBehaviour {
 
     private Color normalColour, focusColour, clickedColour;
 
-    public GameObject letterPanel;
-    public GameObject button;
+    public GameObject letterPanel, button;
     public bool up;
 
     /*
@@ -50,9 +48,13 @@ public class ButtonActions : MonoBehaviour {
     {
         button.GetComponent<Renderer>().material.color = clickedColour;
         if(up)
+        {
             letterPanel.GetComponent<LetterChanger>().MoveUp();
+        }
         else
+        {
             letterPanel.GetComponent<LetterChanger>().MoveDown();
+        }
     }
 
 }

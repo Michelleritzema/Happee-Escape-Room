@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 /*
  * Created by Michelle Ritzema.
@@ -38,9 +37,13 @@ public class RoomButtons : MonoBehaviour
     {
         button.GetComponent<Renderer>().material = clicked;
         if(moveRight)
+        {
             roomSelector.GetComponent<RoomSelector>().ChangeRooms(true);
+        }
        else
+        {
             roomSelector.GetComponent<RoomSelector>().ChangeRooms(false);
+        }
     }
 
 }

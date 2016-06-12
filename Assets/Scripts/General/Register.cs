@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 /*
  * Created by Michelle Ritzema.
@@ -13,8 +12,7 @@ public class Register : MonoBehaviour
 
     private string teamName = "";
     private bool displayEmptyWarning = false;
-    private int width = 1400;
-    private int height = 800;
+    private int width = 1400, height = 800;
 
     public Game game;
     public Texture texture;
@@ -62,7 +60,9 @@ public class Register : MonoBehaviour
         if (GUI.Button(new Rect(Screen.width - 800, Screen.height - 220, 160, 50), next, game.GetComponent<Game>().GetStyle(25, Game.GUIType.Button)))
         {
             if(teamName.Equals(""))
-                displayEmptyWarning = true; 
+            {
+                displayEmptyWarning = true;
+            }
             else
             {
                 GetComponent<Settings>().SetTeamName(teamName);
