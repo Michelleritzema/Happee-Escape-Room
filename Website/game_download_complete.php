@@ -9,6 +9,7 @@
 	$GLOBALS['location_game_data'] = "C:/Users/0881495/Desktop/HPLab_Project/Modules/Init_Data";
 	$GLOBALS['location_player_win1'] = "C:/Users/0881495/Desktop/HPLab_Project/Modules/player_win_x86.pdb";
 	$GLOBALS['location_player_win2'] = "C:/Users/0881495/Desktop/HPLab_Project/Modules/player_win_x86_s.pdb";
+	$GLOBALS['readme'] = "C:/Users/0881495/Desktop/HPLab_Project/Modules/README.txt";
 	
 	//Original from: https://davidwalsh.name/create-zip-php
 	/*
@@ -25,6 +26,7 @@
 		addToZip($zip, $GLOBALS['location_game'], "Init.exe");
 		addToZip($zip, $GLOBALS['location_player_win1'], "player_win_x86.pdb");
 		addToZip($zip, $GLOBALS['location_player_win2'], "player_win_x86_s.pdb");
+		addToZip($zip, $GLOBALS['readme'], "README.txt");
 		addFolderToZip($GLOBALS['location_game_data'], $zip, 1);
 		$zip->close();
 		return file_exists($destination);

@@ -49,6 +49,7 @@ input[type=checkbox]:checked + label {
 	
 #plotly-div {
 	width: 100%;
+
 	border: 2px solid #000;
 	border-radius: 10px
 }
@@ -63,7 +64,9 @@ input[type=checkbox]:checked + label {
 }
 
 /* General classes */
-
+.plotly_area {
+	
+}
 .center_block {
 	display: block !important;
     margin: auto !important;

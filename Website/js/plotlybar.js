@@ -260,7 +260,9 @@ var trace11 = {
 var data = [trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8, trace9, trace10, trace11];
 var layout = {
   barmode: "stack", 
-
+  autosize: false,
+  width: 1070,
+  height: 500,
   font: {
     color: "rgba(0,0,0,1)", 
     family: "", 

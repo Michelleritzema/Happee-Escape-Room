@@ -19,9 +19,10 @@
 			<h2 class="build_page_title">
 				<span class="green_line">Totale tijd in minuten per school</span>
 			</h2>
-			<div id="plotly-div">
+			<div id="plotly-div" class="center_block">
 				<script src="js/plotlybar.js"></script>
 			</div>
+			
 		</div>
 		<div class="copyright center_text">
 			<span class="copyright_text green_line">&copy; Happee, 2016</span>
