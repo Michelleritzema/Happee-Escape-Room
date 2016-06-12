@@ -12,15 +12,22 @@ using System.Collections;
 
 public class SendData : MonoBehaviour {
 
-    private string teamName, finishTime, module1Time, module2Time, module3Time, module4Time;
+    private string teamName, finishTime, module1Time, module2Time, module3Time, module4Time, url;
+    public Game game;
 
     /*
      * Creates a post function in the WWW module with the URL and the dictionary, 
      * puts the content of the dictionary in the form to be sent to webservice.
      */
-    public WWW POST(string url)
+    public WWW POST()
     {
-      
+        url = "http://145.24.222.121/dbReceive.php";
+        finishTime = game.GetComponent<Settings>().GetFinishTime();
+        teamName = game.GetComponent<Settings>().GetTeamName();
+        module1Time = game.GetComponent<Settings>().GetModule1Time();
+        module2Time = game.GetComponent<Settings>().GetModule2Time();
+        module3Time = game.GetComponent<Settings>().GetModule3Time();
+        module4Time = game.GetComponent<Settings>().GetModule4Time();
         WWWForm WwForm = new WWWForm();
         WwForm.AddField("endTime", finishTime);
         WwForm.AddField("teamName", teamName);
@@ -49,44 +56,5 @@ public class SendData : MonoBehaviour {
         }
     }
 
-    /*
- * Stores the finish time string.
- */
-    public void SetFinishTime(string finishTime)
-    {
-        this.finishTime = finishTime;
-    }
-
-    /*
-     * Stores the module 1 finish time string.
-     */
-    public void SetModule1Time(string time)
-    {
-        module1Time = time;
-    }
-
-    /*
-     * Stores the module 2 finish time string.
-     */
-    public void SetModule2Time(string time)
-    {
-        module2Time = time;
-    }
-
-    /*
-     * Stores the module 3 finish time string.
-     */
-    public void SetModule3Time(string time)
-    {
-        module3Time = time;
-    }
-
-    /*
-     * Stores the module 4 finish time string.
-     */
-    public void SetModule4Time(string time)
-    {
-        module4Time = time;
-    }
 
 }

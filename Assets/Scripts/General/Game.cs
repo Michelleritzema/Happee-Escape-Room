@@ -21,7 +21,7 @@ public class Game : MonoBehaviour {
     private bool started, completed, escaped;
     private double unlockAmount, unlockedLettersAmount;
 
-    public GameObject roomSelector, escapeDoorIndicatorGlass;
+    public GameObject roomSelector, escapeDoorIndicatorGlass, DataSender;
     public Camera initialCamera, playerCamera, PcCamera;
     public Light escapeDoorIndicatorLight;
     public Door escapeDoor, puzzleDoor;
@@ -337,7 +337,7 @@ public class Game : MonoBehaviour {
         roomSelector.GetComponent<RoomSelector>().HideAllRooms();
         escapeDoor.DoorMovable(false);
         puzzleDoor.DoorMovable(false);
-        GetComponent<SendData>().POST("http://145.24.222.121/dbReceive.php");
+        DataSender.GetComponent<SendData>().POST();
     }
 
     /*

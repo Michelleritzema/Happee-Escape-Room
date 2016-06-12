@@ -237,4 +237,40 @@ public class Settings : MonoBehaviour {
         module4Time = time;
     }
 
+    public string GetFinishTime()
+    {
+        return finishTime;
+    }
+
+    /*
+     * gets the module 1 finish time string.
+     */
+    public string GetModule1Time()
+    {
+        return module1Time;
+    }
+
+    /*
+     * Stores the module 2 finish time string.
+     */
+    public string GetModule2Time()
+    {
+        return module2Time;
+    }
+
+    /*
+     * Stores the module 3 finish time string.
+     */
+    public string GetModule3Time()
+    {
+        return module3Time;
+    }
+
+    /*
+     * Stores the module 4 finish time string.
+     */
+    public string GetModule4Time()
+    {
+        return module4Time;
+    }
 }
